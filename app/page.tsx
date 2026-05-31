@@ -12,7 +12,15 @@ function useInView(threshold = 0.15) {
   return [ref, inView];
 }
 
-function FadeIn({ children, delay = 0, className = "" }) {
+function FadeIn({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const [ref, inView] = useInView();
   return (
     <div ref={ref} className={className} style={{
@@ -25,7 +33,15 @@ function FadeIn({ children, delay = 0, className = "" }) {
   );
 }
 
-function SlideIn({ children, delay = 0, direction = "left" }) {
+function SlideIn({
+  children,
+  delay = 0,
+  direction = "left",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  direction?: string;
+}) {
   const [ref, inView] = useInView();
   const x = direction === "left" ? "-40px" : "40px";
   return (
@@ -70,7 +86,7 @@ const techColors = {
   "Team Collaboration": "bg-blue-900/50 text-blue-300 border-blue-700",
 };
 
-function TagBadge({ tag }) {
+function TagBadge({ tag }: { tag: string }) {
   const cls = techColors[tag] || "bg-zinc-800 text-zinc-300 border-zinc-600";
   return (
     <span className={`inline-block text-xs px-2.5 py-1 rounded-full border ${cls} font-medium tracking-wide`}>
@@ -161,7 +177,13 @@ const certifications = [
   },
 ];
 
-function ProjectCard({ project, index }) {
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: any;
+  index: number;
+}) {
   const [open, setOpen] = useState(false);
   const [ref, inView] = useInView();
   return (
@@ -215,7 +237,7 @@ export default function Home() {
     return () => { clearTimeout(timer); window.removeEventListener("scroll", onScroll); };
   }, []);
 
-  const scrollTo = (id) => {
+  const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: "smooth" });
   };
