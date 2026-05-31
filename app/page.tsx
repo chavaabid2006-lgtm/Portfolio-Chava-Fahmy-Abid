@@ -102,7 +102,9 @@ const techColors = {
 };
 
 function TagBadge({ tag }: { tag: string }) {
-  const cls = techColors[tag] || "bg-zinc-800 text-zinc-300 border-zinc-600";
+  const cls =
+    techColors[tag as keyof typeof techColors] ||
+    "bg-zinc-800 text-zinc-300 border-zinc-600";
   return (
     <span className={`inline-block text-xs px-2.5 py-1 rounded-full border ${cls} font-medium tracking-wide`}>
       {tag}
