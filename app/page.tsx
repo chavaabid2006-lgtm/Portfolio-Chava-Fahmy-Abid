@@ -1,17 +1,32 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-function useInView(threshold = 0.15) {
-  const ref = useRef(null);
+function useInView(threshold = 0.15): [
+  React.RefObject<HTMLDivElement | null>,
+  boolean
+] {
   const [inView, setInView] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+        }
+      },
+      { threshold }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [threshold]);
+
   return [ref, inView];
 }
-
 function FadeIn({
   children,
   delay = 0,
