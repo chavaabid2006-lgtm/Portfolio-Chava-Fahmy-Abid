@@ -223,10 +223,14 @@ function ProjectCard({
         <div style={{ maxHeight: open ? "800px" : "0", overflow: "hidden", transition: "max-height 0.5s cubic-bezier(0.4,0,0.2,1)" }}>
           <div className="px-6 pb-6 border-t border-zinc-800/80 pt-5">
             <div className="space-y-3 text-zinc-300 leading-relaxed mb-5">
-              {project.desc.map((p, i) => <p key={i}>{p}</p>)}
+              {project.desc.map((p: string, i: number) => (
+  <p key={i}>{p}</p>
+))}
             </div>
             <div className="flex flex-wrap gap-2">
-              {project.tags.map(tag => <TagBadge key={tag} tag={tag} />)}
+              {project.tags.map((tag: string) => (
+  <TagBadge key={tag} tag={tag} />
+))}
             </div>
           </div>
         </div>
