@@ -257,11 +257,11 @@ function IssueGallery() {
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={issueImages["issue1"]} alt="Issue Tracker desktop app form UI in Visual Studio" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic">Issue Tracker desktop UI — form with issue type categorisation, priority levels, and dynamic fields built in C#</p>
+          
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={issueImages["issue2"]} alt="IssueTrackerDB database structure in SQL Server Management Studio" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic pb-1">IssueTrackerDB in SSMS — tables for BillingIssues, IssueReports, ServiceIssues, and TechnicalIssues</p>
+         
         </div>
       </div>
     </div>
@@ -282,7 +282,7 @@ function FlowerGallery() {
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={flowerImages["flower1"]} alt="Flower Shop e-commerce product listing page" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic pb-1">Product listing page — flower catalogue with Add to Cart functionality and a cart button</p>
+          
         </div>
       </div>
     </div>
@@ -303,7 +303,7 @@ function AircraftGallery() {
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={aircraftImages["aircraft1"]} alt="Folium map showing live aircraft locations over Malaysia" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic">Interactive Folium map — real-time aircraft location tracking over Malaysia and surrounding regions</p>
+          
           <div className="grid grid-cols-2 gap-2">
             <div className="rounded-xl overflow-hidden border border-zinc-700/50">
               <img src={aircraftImages["aircraft2"]} alt="Flight traffic over time line chart" style={{display:"block", width:"100%", height:"auto"}} />
@@ -312,11 +312,11 @@ function AircraftGallery() {
               <img src={aircraftImages["aircraft4"]} alt="Aircraft altitude changes chart" style={{display:"block", width:"100%", height:"auto"}} />
             </div>
           </div>
-          <p className="text-zinc-600 text-xs text-center italic">Matplotlib analytics — flight traffic trends over time (left) and aircraft altitude changes (right)</p>
+          
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={aircraftImages["aircraft3"]} alt="Scatter plot of possible airport locations by low altitude aircraft" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic pb-1">Possible airport locations detected via low-altitude aircraft clustering — global scatter plot</p>
+         
         </div>
       </div>
     </div>
@@ -337,11 +337,11 @@ function SheinGallery() {
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={sheinImages["shein2"]} alt="SHEIN+ redesign homepage with hero banner" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic">Redesigned homepage — hero banner with promotional announcement bar and category navigation</p>
+         
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={sheinImages["shein1"]} alt="SHEIN+ redesign product listing page" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic pb-1">Product listing page — improved card layout with discount badges, colour swatches, and ratings</p>
+          
         </div>
       </div>
     </div>
@@ -362,7 +362,7 @@ function ExpGallery() {
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={expImages["exp5"]} alt="Native Power Project team group photo" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic">Native Power Project team with the village community — Kampung Tebang Baru, Tasik Banding, Gerik, Perak</p>
+        
           <div className="grid grid-cols-2 gap-2">
             <div className="rounded-xl overflow-hidden border border-zinc-700/50">
               <img src={expImages["exp1"]} alt="Installing solar light fixture indoors" style={{display:"block", width:"100%", height:"auto"}} />
@@ -371,7 +371,7 @@ function ExpGallery() {
               <img src={expImages["exp4"]} alt="Solar panel installation on rooftop" style={{display:"block", width:"100%", height:"auto"}} />
             </div>
           </div>
-          <p className="text-zinc-600 text-xs text-center italic">Installing solar-powered lighting systems inside the community hall and mounting solar panels on the roof</p>
+         
           <div className="grid grid-cols-2 gap-2">
             <div className="rounded-xl overflow-hidden border border-zinc-700/50">
               <img src={expImages["exp2"]} alt="Team arriving at the village by boat" style={{display:"block", width:"100%", height:"auto"}} />
@@ -380,7 +380,7 @@ function ExpGallery() {
               <img src={expImages["exp3"]} alt="Rooftop solar panel wiring work" style={{display:"block", width:"100%", height:"auto"}} />
             </div>
           </div>
-          <p className="text-zinc-600 text-xs text-center italic pb-1">Team at Tasik Banding jetty · Rooftop solar installation work</p>
+         
         </div>
       </div>
     </div>
@@ -401,7 +401,7 @@ function IftpGallery() {
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={iftpImages["iftp4"]} alt="Team with Invent for the Planet consolation prize" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic">The team with the Consolation Prize — Invent for the Planet 2025, 9 February 2025</p>
+         
           <div className="grid grid-cols-2 gap-2">
             <div className="rounded-xl overflow-hidden border border-zinc-700/50">
               <img src={iftpImages["iftp2"]} alt="Chava holding the consolation prize board" style={{display:"block", width:"100%", height:"auto"}} />
@@ -413,7 +413,7 @@ function IftpGallery() {
           <div className="rounded-xl overflow-hidden border border-zinc-700/50">
             <img src={iftpImages["iftp3"]} alt="Reviewing Invent for the Planet problem statement" style={{display:"block", width:"100%", height:"auto"}} />
           </div>
-          <p className="text-zinc-600 text-xs text-center italic pb-1">Reviewing the problem statement during the hackathon</p>
+         
         </div>
       </div>
     </div>
@@ -497,7 +497,7 @@ export default function Home() {
     if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 60, behavior: "smooth" });
   };
 
-  const navItems = ["About", "Education", "Skills", "Projects", "Achievements", "Experience", "Certifications", "Contact"];
+  const navItems = ["About", "Education", "Skills", "Projects", "Achievements", "Experience", "Certificates", "Contact"];
 
   return (
     <main className="bg-zinc-950 text-white min-h-screen overflow-x-hidden">
@@ -556,7 +556,7 @@ export default function Home() {
           </h1>
         </div>
         <div style={{ opacity: heroVisible ? 1 : 0, transform: heroVisible ? "translateY(0)" : "translateY(32px)", transition: "opacity 1s ease 0.6s, transform 1s ease 0.6s" }}>
-          <h2 className="text-lg sm:text-2xl text-cyan-400 font-medium tracking-wider mb-4">Information Technology Student</h2>
+          <h2 className="text-lg sm:text-2xl text-cyan-400 font-medium tracking-wider mb-4">Bachelor of Information Technology (Hons) Student</h2>
           <p className="max-w-sm sm:max-w-xl text-zinc-400 text-sm sm:text-lg leading-relaxed">IT Student at Universiti Teknologi PETRONAS passionate about software development, databases, UI/UX, and emerging technologies.</p>
         </div>
         <div style={{ opacity: heroVisible ? 1 : 0, transition: "opacity 1s ease 1s" }} className="absolute bottom-8 left-1/2 -translate-x-1/2">
@@ -572,10 +572,9 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-6 sm:gap-10 mb-10 sm:mb-16">
           <SlideIn delay={0.1} direction="left">
             <div className="space-y-4 text-zinc-300 leading-7 sm:leading-8 text-sm sm:text-[1.05rem]">
-              <p>I am currently pursuing a <span className="text-white font-medium">Bachelor of Information Technology (Hons)</span> at Universiti Teknologi PETRONAS, now in my sixth semester.</p>
-              <p>I am adaptable, curious, and eager to learn new technologies while continuously improving existing skills. My personal values are rooted in remaining open to progress.</p>
-              <p>I am currently seeking an <span className="text-cyan-400 font-medium">IT internship opportunity</span> and planning to pursue further studies — eager to bring a fresh perspective, technical aptitude, and rapid learning ability to a dynamic IT team.</p>
-              <p>I am excited about the opportunity to contribute meaningfully and grow within a spacious, forward-thinking environment.</p>
+              <p>I am Chava Fahmy Abid, I am currently pursuing a <span className="text-white font-medium">Bachelor of Information Technology (Hons)</span> at Universiti Teknologi PETRONAS, now in my sixth semester.  I have honed my skills in coding, software maintenance and problem solving through various projects and I am eager to bring my innovative mindset and technical expertise.</p>
+              <p>I am currently seeking an <span className="text-cyan-400 font-medium">IT internship opportunity</span> and planning to pursue further studies, eager to bring a fresh perspective, technical aptitude, and rapid learning ability to a dynamic IT team.</p>
+              <p>During my time at Universiti Teknologi Petronas, I have undertaken and gained practical experience through some projects. The experiences has taught me both my technical and teamwork skills. I am adaptable, curious, and eager to learn new technologies while continuously improving existing skills.</p>
             </div>
           </SlideIn>
           <SlideIn delay={0.2} direction="right">
@@ -934,7 +933,7 @@ export default function Home() {
 
       {/* CERTIFICATIONS */}
       <section id="certifications" className="max-w-5xl mx-auto py-16 sm:py-28 px-4 sm:px-6">
-        <SectionHeader label="Credentials" title="Certifications" />
+        <SectionHeader label="Credentials" title="Certificates" />
 
         <FadeIn delay={0.05}>
           <div className="flex items-center gap-3 mb-6">
