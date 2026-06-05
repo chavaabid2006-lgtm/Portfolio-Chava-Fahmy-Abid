@@ -585,7 +585,7 @@ export default function Home() {
                 { label: "Date of Birth", value: "2 November 2006, Makassar" },
                 { label: "Nationality", value: "Indonesian" },
                 { label: "Gender", value: "Male" },
-                { label: "Driving License", value: "Class A (SIM A) — Indonesia" },
+               
               ].map(({ label, value }) => (
                 <div key={label} className="flex justify-between items-start py-2.5 gap-3">
                   <span className="text-zinc-500 text-xs sm:text-sm shrink-0 pt-0.5">{label}</span>
@@ -600,12 +600,9 @@ export default function Home() {
           <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">Personal Details</h3>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
-              { icon: "📱", label: "Mobile (MY)", value: "+60 193 028 240" },
-              { icon: "💬", label: "WhatsApp (ID)", value: "+62 822 7608 4624" },
               { icon: "✉️", label: "University Email", value: "m_24004897@utp.edu.my" },
-              { icon: "✉️", label: "Personal Email", value: "chavaabid.2006@gmail.com" },
               { icon: "📍", label: "Current Address", value: "Student Dorm, Universiti Teknologi Petronas, 32610 Seri Iskandar, Perak, Malaysia" },
-              { icon: "🏠", label: "Home Address", value: "Jl. Kiwi, Komp. Taman Kasuari Indah Tahap II No. M-43, Medan Sunggal, Medan, Indonesia 20122" },
+              { icon: "🏠", label: "Home Address", value: "Medan, Indonesia 20122" },
             ].map(({ icon, label, value }) => (
               <div key={label} className="flex gap-3 p-3 sm:p-4 rounded-xl border border-zinc-800 bg-zinc-900/40 hover:border-zinc-600 transition-colors duration-200">
                 <span className="text-base mt-0.5 shrink-0">{icon}</span>
@@ -987,9 +984,6 @@ export default function Home() {
         <div className="grid sm:grid-cols-2 gap-3">
           {[
             { icon: "✉️", label: "University Email", value: "m_24004897@utp.edu.my", href: "mailto:m_24004897@utp.edu.my", delay: 0.1 },
-            { icon: "✉️", label: "Personal Email", value: "chavaabid.2006@gmail.com", href: "mailto:chavaabid.2006@gmail.com", delay: 0.15 },
-            { icon: "📱", label: "Mobile (Malaysia)", value: "+60 193 028 240", href: "tel:+601930282400", delay: 0.2 },
-            { icon: "💬", label: "WhatsApp (Indonesia)", value: "+62 822 7608 4624", href: "https://wa.me/628227608462", delay: 0.25 },
             { icon: "💼", label: "LinkedIn", value: "linkedin.com/in/chavaabid", href: "https://linkedin.com/in/chavaabid", delay: 0.3 },
           ].map(({ icon, label, value, href, delay }) => (
             <FadeIn key={label} delay={delay}>
