@@ -573,7 +573,7 @@ export default function Home() {
           <SlideIn delay={0.1} direction="left">
             <div className="space-y-4 text-zinc-300 leading-7 sm:leading-8 text-sm sm:text-[1.05rem]">
               <p>I am Chava Fahmy Abid, I am currently pursuing a <span className="text-white font-medium">Bachelor of Information Technology (Hons)</span> at Universiti Teknologi PETRONAS, now in my sixth semester.  I have honed my skills in coding, software maintenance and problem solving through various projects and I am eager to bring my innovative mindset and technical expertise.</p>
-              <p>I am currently seeking an <span className="text-cyan-400 font-medium">IT internship opportunity</span> and planning to pursue further studies, eager to bring a fresh perspective, technical aptitude, and rapid learning ability to a dynamic IT team. I am able to start my internship from<b> September 2026 - May 2027</b></p>
+              <p>I am currently seeking an <span className="text-cyan-400 font-medium">IT internship opportunity</span> and planning to pursue further studies, eager to bring a fresh perspective, technical aptitude, and rapid learning ability to a dynamic IT team. I am able to start my internship from<b> September 2026 - May 2027.</b></p>
               <p>During my time at Universiti Teknologi Petronas, I have undertaken and gained practical experience through some projects. The experiences has taught me both my technical and teamwork skills. I am adaptable, curious, and eager to learn new technologies while continuously improving existing skills.</p>
             </div>
           </SlideIn>
@@ -722,7 +722,7 @@ export default function Home() {
               <div className="space-y-3">
                 {[
                   { lang: "Bahasa Indonesia", level: "Native", pct: 100, color: "bg-cyan-500" },
-                  { lang: "English", level: "Proficient", pct: 80, color: "bg-blue-500" },
+                  { lang: "English", level: "Proficient", pct: 95, color: "bg-blue-500" },
                   { lang: "Bahasa Melayu", level: "Proficient", pct: 75, color: "bg-teal-500" },
                 ].map(({ lang, level, pct, color }) => (
                   <div key={lang}>
