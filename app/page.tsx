@@ -923,6 +923,62 @@ export default function Home() {
             <ExpGallery />
           </div>
         </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <div className="flex items-center gap-3 mb-6 mt-10">
+            <div className="h-px flex-1 bg-zinc-800" />
+            <span className="text-zinc-500 text-xs uppercase tracking-widest">Batari School</span>
+            <div className="h-px flex-1 bg-zinc-800" />
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.2}>
+          <div className="relative rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 sm:p-6 hover:border-zinc-700 transition-colors duration-300">
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <div className="flex items-start gap-3">
+                <span className="text-xl mt-0.5">🏆</span>
+                <div>
+                  <p className="text-white font-semibold text-base sm:text-lg">Captain</p>
+                  <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">Batari School · Part-time</p>
+                  <p className="text-zinc-500 text-xs sm:text-sm mt-0.5">Medan, North Sumatra, Indonesia · On-site</p>
+                </div>
+              </div>
+              <span className="text-zinc-500 text-xs sm:text-sm shrink-0">Sep 2023 – Oct 2023 </span>
+            </div>
+            <p className="text-zinc-400 text-xs sm:text-sm mt-3 pl-9 leading-relaxed">
+              Served as Team Captain during the school&apos;s annual Sports Day, leading a large group of students competing across various sporting events. Coordinated participant selection and event assignments based on individual strengths and abilities to maximize team performance. Facilitated communication, teamwork, and event planning throughout the competition, contributing to the team&apos;s overall 2nd place finish. Developed leadership, decision-making, organizational, and team management skills through the experience.
+            </p>
+            <div className="mt-4 pl-9 flex flex-wrap gap-1.5">
+              {["Leadership", "Team Management", "Event Planning", "Decision Making", "Sports"].map(tag => (
+                <span key={tag} className="inline-block text-xs px-2.5 py-1 rounded-full border bg-zinc-800/60 text-zinc-300 border-zinc-700/60 font-medium">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.25}>
+          <div className="relative rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 sm:p-6 hover:border-zinc-700 transition-colors duration-300 mt-4">
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <div className="flex items-start gap-3">
+                <span className="text-xl mt-0.5">🎤</span>
+                <div>
+                  <p className="text-white font-semibold text-base sm:text-lg">Student Debater</p>
+                  <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">Batari School · Part-time</p>
+                  <p className="text-zinc-500 text-xs sm:text-sm mt-0.5">Medan, North Sumatra, Indonesia · Hybrid</p>
+                </div>
+              </div>
+              <span className="text-zinc-500 text-xs sm:text-sm shrink-0">Jan 2022 – Feb 2022 </span>
+            </div>
+            <p className="text-zinc-400 text-xs sm:text-sm mt-3 pl-9 leading-relaxed">
+              Represented my team in competitive debate competitions, delivering structured arguments and responding to opposing viewpoints under time constraints. Reached the finals of a debate competition while developing strong communication, analytical thinking, public speaking, and teamwork skills.
+            </p>
+            <div className="mt-4 pl-9 flex flex-wrap gap-1.5">
+              {["Public Speaking", "Debate", "Critical Thinking", "Communication", "Teamwork"].map(tag => (
+                <span key={tag} className="inline-block text-xs px-2.5 py-1 rounded-full border bg-zinc-800/60 text-zinc-300 border-zinc-700/60 font-medium">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
       </section>
 
       <Divider />
