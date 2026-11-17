@@ -365,16 +365,15 @@ const galleries: Record<string, { label: string; rows: Img[][] }> = {
 };
 
 const tagHex: Record<string, string> = {
-  Python: "#60a5fa", SQLite: "#94a3b8", Matplotlib: "#22d3ee", Figma: "#f472b6", PHP: "#a78bfa",
-  MySQL: "#fb923c", HTML: "#f87171", CSS: "#38bdf8", JavaScript: "#facc15", "C#": "#4ade80", "C++": "#60a5fa",
-  AI: "#e879f9", API: "#2dd4bf", IoT: "#34d399", XML: "#fdba74", DBMS: "#818cf8",
+  Python: "#60a5fa", SQLite: "#94a3b8", Matplotlib: "#22d3ee", Figma: "#fbbf24", PHP: "#a78bfa",
+  MySQL: "#38bdf8", HTML: "#f97316", CSS: "#6366f1", JavaScript: "#facc15", "C#": "#4ade80", "C++": "#60a5fa",
+  AI: "#c084fc", API: "#2dd4bf", IoT: "#34d399", XML: "#fdba74", DBMS: "#818cf8",
 };
 
 const projects = [
   {
     title: "Drone Monitoring System",
     subtitle: "Invent for the Planet 2025 · 4th Place",
-    icon: "🏆",
     summary: "A drone-integrated monitoring platform with secure login, real-time drone readings and an AI-powered assistant.",
     stack: ["PHP", "MySQL", "JavaScript", "AI"],
     desc: [
@@ -389,7 +388,7 @@ const projects = [
   },
   {
     title: "Aircraft Monitoring & Analytics System",
-    icon: "✈️",
+    subtitle: "IoT & Data Analytics",
     summary: "IoT pipeline that collects live OpenSky telemetry into SQLite and turns it into maps and analytics.",
     stack: ["Python", "SQLite", "Matplotlib", "API"],
     desc: [
@@ -403,7 +402,7 @@ const projects = [
   },
   {
     title: "SHEIN+ UX Redesign Project",
-    icon: "🎨",
+    subtitle: "UI/UX · Human-Computer Interaction",
     summary: "A Human-Computer Interaction redesign of SHEIN, from usability analysis to interactive Figma prototypes.",
     stack: ["Figma", "UX Research", "Prototyping"],
     desc: [
@@ -417,7 +416,7 @@ const projects = [
   },
   {
     title: "Flower Shop E-Commerce Website",
-    icon: "🌸",
+    subtitle: "Full-stack Web Development",
     summary: "Full-stack online flower shop with a shopping cart, order processing and product management. Graded A.",
     stack: ["PHP", "MySQL", "JavaScript"],
     desc: [
@@ -432,7 +431,7 @@ const projects = [
   },
   {
     title: "Issue Reporting Management System",
-    icon: "🗂️",
+    subtitle: "Desktop Application",
     summary: "Desktop app for submitting, prioritising and tracking issues, backed by a SQL Server database.",
     stack: ["C#", "SQL Server"],
     desc: [
@@ -447,35 +446,35 @@ const projects = [
 ];
 
 const certifications = [
-  { name: "Python Advanced Level", tier: "Excellence", hex: "#fbbf24", date: "5 August 2024", icon: "🐍", verify: "https://link.brightchamps.com/SPBnL4MlED4D", img: "python-advanced" },
-  { name: "Web Development", tier: "Achievement", hex: "#22d3ee", date: "9 August 2024", icon: "🌐", verify: "https://link.brightchamps.com/vVigFIlOhFEqo", img: "web-dev" },
-  { name: "App Development", tier: "Achievement", hex: "#22d3ee", date: "26 June 2024", icon: "📱", verify: "https://link.brightchamps.com/VTVoBtigxu4q", img: "app-dev" },
-  { name: "Python Beginner Level", tier: "Achievement", hex: "#22d3ee", date: "26 June 2024", icon: "🐍", verify: "https://link.brightchamps.com/ZxPfDSJA6Nrrj", img: "python-beginner" },
-  { name: "Electronics Beginner Level", tier: "Participation", hex: "#94a3b8", date: "15 August 2024", icon: "⚡", verify: "https://link.brightchamps.com/sUx7V0VhL7hs2", img: "electronics" },
-  { name: "Machine Learning", tier: "Participation", hex: "#94a3b8", date: "28 February 2025", icon: "🤖", verify: "https://link.brightchamps.com/tU5Ik3ilvWgDG", img: "machine-learning" },
+  { name: "Python Advanced Level", tier: "Excellence", hex: "#fbbf24", date: "5 August 2024", verify: "https://link.brightchamps.com/SPBnL4MlED4D", img: "python-advanced" },
+  { name: "Web Development", tier: "Achievement", hex: "#22d3ee", date: "9 August 2024", verify: "https://link.brightchamps.com/vVigFIlOhFEqo", img: "web-dev" },
+  { name: "App Development", tier: "Achievement", hex: "#22d3ee", date: "26 June 2024", verify: "https://link.brightchamps.com/VTVoBtigxu4q", img: "app-dev" },
+  { name: "Python Beginner Level", tier: "Achievement", hex: "#22d3ee", date: "26 June 2024", verify: "https://link.brightchamps.com/ZxPfDSJA6Nrrj", img: "python-beginner" },
+  { name: "Electronics Beginner Level", tier: "Participation", hex: "#94a3b8", date: "15 August 2024", verify: "https://link.brightchamps.com/sUx7V0VhL7hs2", img: "electronics" },
+  { name: "Machine Learning", tier: "Participation", hex: "#94a3b8", date: "28 February 2025", verify: "https://link.brightchamps.com/tU5Ik3ilvWgDG", img: "machine-learning" },
 ];
 
 const skillGroups = [
-  { title: "Languages", icon: "⌨️", hex: "#22d3ee", items: ["Python", "C#", "C++", "PHP", "JavaScript", "HTML", "CSS", "XML"] },
-  { title: "Databases", icon: "🗄️", hex: "#fb923c", items: ["MySQL", "SQLite", "SQL Server Management Studio", "DBMS", "Data Management"] },
-  { title: "Software & Data", icon: "⚙️", hex: "#a78bfa", items: ["Software Development", "Web Development", "Software Integration", "API", "IoT", "AI", "Data Analytics", "Data Visualization", "Matplotlib"] },
-  { title: "UI/UX & Design", icon: "🎨", hex: "#f472b6", items: ["Figma", "UI Design", "UX Design", "Wireframing", "Prototyping", "UX Research", "User Research", "Usability Testing", "Design Thinking", "Human Computer Interaction"] },
+  { title: "Languages", hex: "#22d3ee", items: ["Python", "C#", "C++", "PHP", "JavaScript", "HTML", "CSS", "XML"] },
+  { title: "Databases", hex: "#fb923c", items: ["MySQL", "SQLite", "SQL Server Management Studio", "DBMS", "Data Management"] },
+  { title: "Software & Data", hex: "#a78bfa", items: ["Software Development", "Web Development", "Software Integration", "API", "IoT", "AI", "Data Analytics", "Data Visualization", "Matplotlib"] },
+  { title: "UI/UX & Design", hex: "#fbbf24", items: ["Figma", "UI Design", "UX Design", "Wireframing", "Prototyping", "UX Research", "User Research", "Usability Testing", "Design Thinking", "Human Computer Interaction"] },
 ];
 
 const schoolAwards = [
-  { award: "Loyalty Award", date: "7 June 2024", icon: "🏅" },
-  { award: "Most Relevant Project — Science Fair 2024", date: "6 March 2024", icon: "🔬" },
-  { award: "Best Presentation & Best Project — IDP Week", date: "1 March 2024", icon: "🥇" },
-  { award: "Best New Talent — Arts Festival 2023", date: "5 December 2023", icon: "🌟" },
-  { award: "Captain — Sports Day 2023", date: "13 October 2023", icon: "🎖️" },
-  { award: "2nd Place in Relay Race — Sports Day 2023", date: "13 October 2023", icon: "🥈" },
-  { award: "Artistic Performance — Arts Festival 2023", date: "5 June 2023", icon: "🎭" },
-  { award: "Best Project Presentation — IDP Week", date: "2 September 2022", icon: "🥇" },
-  { award: "Participation — Pusat Olimpiade Sains Indonesia 2022", date: "21 August 2022", icon: "🔭" },
-  { award: "3rd Place in Fashion Show — Family Day", date: "16 August 2022", icon: "🥉" },
-  { award: "1st Runner Up in Basketball 3-on-3 CBD — Arts & Sports Festival 2022", date: "8 June 2022", icon: "🏀" },
-  { award: "Debate Finalist — English Week", date: "18 February 2022", icon: "🎤" },
-  { award: "Most Innovative Project — Project Week", date: "3 September 2021", icon: "💡" },
+  { award: "Loyalty Award", date: "7 June 2024" },
+  { award: "Most Relevant Project — Science Fair 2024", date: "6 March 2024" },
+  { award: "Best Presentation & Best Project — IDP Week", date: "1 March 2024" },
+  { award: "Best New Talent — Arts Festival 2023", date: "5 December 2023" },
+  { award: "Captain — Sports Day 2023", date: "13 October 2023" },
+  { award: "2nd Place in Relay Race — Sports Day 2023", date: "13 October 2023" },
+  { award: "Artistic Performance — Arts Festival 2023", date: "5 June 2023" },
+  { award: "Best Project Presentation — IDP Week", date: "2 September 2022" },
+  { award: "Participation — Pusat Olimpiade Sains Indonesia 2022", date: "21 August 2022" },
+  { award: "3rd Place in Fashion Show — Family Day", date: "16 August 2022" },
+  { award: "1st Runner Up in Basketball 3-on-3 CBD — Arts & Sports Festival 2022", date: "8 June 2022" },
+  { award: "Debate Finalist — English Week", date: "18 February 2022" },
+  { award: "Most Innovative Project — Project Week", date: "3 September 2021" },
 ];
 
 const navItems = [
@@ -561,10 +560,10 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
         <div className="pj-cover">
           <img src={cover.src} alt={cover.alt} loading="lazy" decoding="async" />
           <span className="pj-num">{num}</span>
-          {project.featured && <span className="pj-badge">★ Featured</span>}
+          {project.featured && <span className="pj-badge">Featured</span>}
         </div>
         <div className="pj-body">
-          <p className="pj-sub">{project.icon} {"subtitle" in project && project.subtitle ? project.subtitle : "Project"}</p>
+          <p className="pj-sub">{project.subtitle}</p>
           <h3>{project.title}</h3>
           <p className="pj-sum">{project.summary}</p>
           <div className="pj-stack">{project.stack.map(s => <Tag key={s} tag={s} />)}</div>
@@ -572,7 +571,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
         </div>
       </Tilt>
       <Modal open={open} onClose={close}>
-        <p className="m-eyebrow">{project.icon} {"subtitle" in project && project.subtitle ? project.subtitle : "Project"}</p>
+        <p className="m-eyebrow">{project.subtitle}</p>
         <h3 className="m-title">{project.title}</h3>
         <div className="m-text">{project.desc.map((p, i) => <p key={i}>{p}</p>)}</div>
         <div className="m-tags">{project.tags.map(t => <Tag key={t} tag={t} />)}</div>
@@ -582,25 +581,25 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
   );
 }
 
-function CertCard({ cert }: { cert: (typeof certifications)[number] }) {
+function CertCard({ cert, index }: { cert: (typeof certifications)[number]; index: number }) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
   return (
     <>
       <Tilt max={6} onClick={() => setOpen(true)} className="cert">
         <span className="cert-glow" style={{ background: cert.hex }} />
-        <span className="cert-icon">{cert.icon}</span>
+        <span className="cert-num" style={{ color: cert.hex }}>{String(index + 1).padStart(2, "0")}</span>
         <span className="cert-tier" style={{ "--c": cert.hex } as CSSProperties}>{cert.tier}</span>
         <h3>{cert.name}</h3>
         <p>BrightCHAMPS · {cert.date}</p>
         <span className="pj-more">View certificate <i>→</i></span>
       </Tilt>
       <Modal open={open} onClose={close}>
-        <p className="m-eyebrow" style={{ color: cert.hex }}>{cert.icon} Certificate of {cert.tier}</p>
+        <p className="m-eyebrow" style={{ color: cert.hex }}>Certificate of {cert.tier}</p>
         <h3 className="m-title">{cert.name}</h3>
         <p className="m-text">BrightCHAMPS · {cert.date}</p>
         <div className="gallery"><div className="g-row"><div className="ph static"><img src={certImages[cert.img]} alt={`${cert.name} certificate`} decoding="async" /></div></div></div>
-        <a className="btn ghost m-btn" href={cert.verify} target="_blank" rel="noopener noreferrer">🔗 Verify certificate</a>
+        <a className="btn ghost m-btn" href={cert.verify} target="_blank" rel="noopener noreferrer">Verify certificate ↗</a>
       </Modal>
     </>
   );
@@ -611,7 +610,7 @@ function PhotoButton({ id, title, subtitle }: { id: string; title: string; subti
   const close = useCallback(() => setOpen(false), []);
   return (
     <>
-      <button className="photo-btn" onClick={() => setOpen(true)}>📸 {galleries[id].label} <i>→</i></button>
+      <button className="photo-btn" onClick={() => setOpen(true)}>View {galleries[id].label.toLowerCase()} <i>→</i></button>
       <Modal open={open} onClose={close}>
         <p className="m-eyebrow">{subtitle}</p>
         <h3 className="m-title">{title}</h3>
@@ -621,90 +620,231 @@ function PhotoButton({ id, title, subtitle }: { id: string; title: string; subti
   );
 }
 
-/* ═══════════════════════════ Intro ═══════════════════════════ */
+/* ═══════════════════════════ Interactive gate ═══════════════════════════ */
 
-const INTRO_WORD = "PORTFOLIO".split("");
-const GLYPHS = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&@$<>/";
-const INTRO_MS = 2900;
+const GATE_WORD = "PORTFOLIO".split("");
+const HOLD_MS = 1500;
 
-function Intro({ onReveal, onDone }: { onReveal: () => void; onDone: () => void }) {
-  const [pct, setPct] = useState(0);
-  const [glyphs, setGlyphs] = useState<string[]>(() => INTRO_WORD.map(() => "·"));
-  const [out, setOut] = useState(false);
-  const pRef = useRef(0);
-  const started = useRef(false);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  const finish = useCallback(() => {
-    if (started.current) return;
-    started.current = true;
-    pRef.current = 1;
-    setPct(100);
-    setOut(true);
-    timers.current.push(setTimeout(onReveal, 450));
-    timers.current.push(setTimeout(onDone, 1550));
-  }, [onReveal, onDone]);
+/** Cursor-reactive PORTFOLIO title. Press and hold (mouse, touch or Space/Enter) to charge it,
+ *  the letters burst apart and a portal opens from your pointer into the site. */
+function Gate({ onReveal, onDone }: { onReveal: () => void; onDone: () => void }) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const curRef = useRef<HTMLDivElement>(null);
+  const wordRef = useRef<HTMLHeadingElement>(null);
+  const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const barRef = useRef<HTMLElement>(null);
+  const pctRef = useRef<HTMLSpanElement>(null);
+  const skipRef = useRef<() => void>(() => {});
 
   useEffect(() => {
-    let raf = 0;
-    const t0 = performance.now();
-    const tick = (t: number) => {
-      const x = Math.min(1, (t - t0) / INTRO_MS);
-      const p = x * x * (3 - 2 * x);
-      pRef.current = p;
-      setPct(Math.round(p * 100));
-      if (x < 1) raf = requestAnimationFrame(tick);
-      else timers.current.push(setTimeout(finish, 450));
+    const root = rootRef.current, ring = ringRef.current, cur = curRef.current, word = wordRef.current;
+    if (!root || !ring || !cur || !word) return;
+    const letters = letterRefs.current.filter((l): l is HTMLSpanElement => !!l);
+    const n = letters.length;
+    type L = { x: number; y: number; vx: number; vy: number; r: number; vr: number; k: number; sc: number };
+    const st: L[] = letters.map(() => ({ x: 0, y: 0, vx: 0, vy: 0, r: 0, vr: 0, k: 0.2, sc: 1 }));
+    let rest: { cx: number; cy: number }[] = letters.map(() => ({ cx: 0, cy: 0 }));
+    let W = window.innerWidth, H = window.innerHeight;
+    const ptr = { x: W / 2, y: H / 2, active: false, moved: false };
+    const curPos = { x: W / 2, y: H / 2 };
+    let holding = false, charge = 0, phase: "idle" | "burst" = "idle";
+    let burstAt = 0, portalAt = 0, revealed = false, finished = false;
+    let raf = 0, last = performance.now(), lastPct = -1, lastCharging = false;
+    let ox = W / 2, oy = H / 2;
+
+    const measure = () => {
+      W = window.innerWidth; H = window.innerHeight;
+      rest = letters.map((el, i) => {
+        const r = el.getBoundingClientRect();
+        return { cx: r.left + r.width / 2 - st[i].x, cy: r.top + r.height / 2 - st[i].y };
+      });
     };
-    raf = requestAnimationFrame(tick);
-    const scramble = setInterval(() => {
-      setGlyphs(INTRO_WORD.map(() => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]));
-    }, 55);
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Enter" || e.key === "Escape" || e.key === " ") finish(); };
-    window.addEventListener("keydown", onKey);
-    const pending = timers.current;
+
+    const ripple = (px: number, py: number) => {
+      letters.forEach((_, i) => {
+        const dx = rest[i].cx - px, dy = rest[i].cy - py;
+        const f = Math.max(0, 1 - Math.hypot(dx, dy) / 460);
+        st[i].vy -= f * 24;
+        st[i].vr += (dx / 460) * f * 14;
+      });
+    };
+
+    const burst = () => {
+      phase = "burst";
+      burstAt = performance.now();
+      ox = ptr.moved ? ptr.x : W / 2; oy = ptr.moved ? ptr.y : H / 2;
+      root.classList.add("bursting");
+      root.style.setProperty("--ox", `${ox}px`);
+      root.style.setProperty("--oy", `${oy}px`);
+      st.forEach((s, i) => {
+        s.vx = ((rest[i].cx - W / 2) / W) * 70 + (Math.random() - 0.5) * 12;
+        s.vy = (Math.random() - 0.7) * 26;
+        s.vr = (Math.random() - 0.5) * 34;
+      });
+    };
+
+    const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+    const frame = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const t = now / 1000;
+
+      if (phase === "idle") {
+        charge = holding ? Math.min(1, charge + (dt * 1000) / HOLD_MS) : Math.max(0, charge - dt * 1.8);
+        if (charge >= 1) burst();
+      }
+      const c = charge;
+
+      /* word: shake + swell while charging */
+      if (phase === "idle") {
+        const sh = c * c * 5;
+        word.style.transform = c > 0.01 ? `translate(${(Math.random() - 0.5) * sh}px, ${(Math.random() - 0.5) * sh}px) scale(${1 + 0.05 * c})` : "";
+      }
+
+      for (let i = 0; i < n; i++) {
+        const s = st[i], el = letters[i];
+        if (phase === "idle") {
+          const { cx, cy } = rest[i];
+          let tx = 0, ty = Math.sin(t * 1.2 + i * 0.8) * 4, tr = 0;
+          let k = 0.3 + 0.12 * Math.sin(t * 1.4 - i * 0.7);
+          if (ptr.active) {
+            const dx = cx - ptr.x, dy = cy - ptr.y, d = Math.hypot(dx, dy) || 1;
+            const R = 270;
+            if (d < R) {
+              const f = 1 - d / R;
+              tx += (dx / d) * f * 50; ty += (dy / d) * f * 50; tr += (dx / R) * f * 20;
+              k = Math.max(k, 0.25 + f * 0.85);
+            }
+          }
+          tx += (W / 2 - cx) * 0.6 * c + (Math.random() - 0.5) * 7 * c;
+          ty += (Math.random() - 0.5) * 7 * c;
+          k = Math.max(k, 0.35 + 0.65 * c);
+          s.vx += (tx - s.x) * 0.12; s.vy += (ty - s.y) * 0.12; s.vr += (tr - s.r) * 0.1;
+          s.vx *= 0.78; s.vy *= 0.78; s.vr *= 0.78;
+          s.x += s.vx; s.y += s.vy; s.r += s.vr;
+          s.k += (k - s.k) * 0.15;
+          s.sc += ((1 + 0.3 * c) - s.sc) * 0.15;
+          el.style.opacity = String(Math.min(1, 0.18 + s.k * 0.82));
+          el.style.textShadow = c > 0.02 ? `0 0 ${c * 42}px rgba(103,232,249,${0.6 * c})` : "none";
+        } else {
+          s.x += s.vx; s.y += s.vy; s.vy += 0.5; s.r += s.vr;
+          s.sc += 0.012;
+          el.style.opacity = String(Math.max(0, 1 - (now - burstAt) / 650));
+        }
+        el.style.transform = `translate3d(${s.x}px, ${s.y}px, 0) rotate(${s.r}deg) scale(${s.sc})`;
+      }
+
+      /* cursor follower + spotlight */
+      curPos.x += (ptr.x - curPos.x) * 0.2; curPos.y += (ptr.y - curPos.y) * 0.2;
+      cur.style.transform = `translate(${curPos.x}px, ${curPos.y}px) scale(${1 + c * 1.8})`;
+      root.style.setProperty("--mx", `${curPos.x}px`);
+      root.style.setProperty("--my", `${curPos.y}px`);
+
+      /* progress UI */
+      const pct = Math.round(c * 100);
+      if (pct !== lastPct) {
+        lastPct = pct;
+        if (barRef.current) barRef.current.style.transform = `scaleX(${c})`;
+        if (pctRef.current) pctRef.current.textContent = `${String(pct).padStart(3, "0")}%`;
+      }
+      const charging = c > 0.02;
+      if (charging !== lastCharging) { lastCharging = charging; root.classList.toggle("charging", charging); }
+
+      /* portal */
+      if (phase === "burst") {
+        const since = now - burstAt;
+        if (since > 380) {
+          if (!portalAt) { portalAt = now; root.classList.add("portal"); }
+          const maxR = Math.hypot(Math.max(ox, W - ox), Math.max(oy, H - oy)) + 60;
+          const p = Math.min(1, (now - portalAt) / 1200);
+          const hole = ease(p) * maxR;
+          root.style.setProperty("--hole", `${hole}px`);
+          ring.style.opacity = String(p < 0.85 ? 1 : (1 - p) / 0.15);
+          ring.style.width = ring.style.height = `${hole * 2}px`;
+          ring.style.transform = `translate(${ox - hole}px, ${oy - hole}px)`;
+          if (!revealed && now - portalAt > 280) { revealed = true; onReveal(); }
+          if (p >= 1 && !finished) { finished = true; onDone(); return; }
+        }
+      }
+      raf = requestAnimationFrame(frame);
+    };
+
+    /* input */
+    const onMove = (e: PointerEvent) => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.active = true; ptr.moved = true; cur.classList.add("on"); };
+    const onDown = (e: PointerEvent) => {
+      if ((e.target as HTMLElement).closest("button")) return;
+      onMove(e);
+      holding = true;
+      try { root.setPointerCapture(e.pointerId); } catch { /* ignore */ }
+      ripple(e.clientX, e.clientY);
+    };
+    const onUp = () => { holding = false; };
+    const onLeave = (e: PointerEvent) => { if (e.pointerType === "mouse") { ptr.active = false; cur.classList.remove("on"); } };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { skipRef.current(); return; }
+      if ((e.key === " " || e.key === "Enter") && !e.repeat) { e.preventDefault(); if (!holding) ripple(W / 2, H / 2); holding = true; }
+    };
+    const onKeyUp = (e: KeyboardEvent) => { if (e.key === " " || e.key === "Enter") holding = false; };
+
+    skipRef.current = () => { if (phase === "idle") { charge = 1; burst(); } };
+
+    measure();
+    if ("fonts" in document) (document as Document).fonts.ready.then(measure).catch(() => {});
+    const ro = new ResizeObserver(measure);
+    ro.observe(word);
+    window.addEventListener("resize", measure);
+    root.addEventListener("pointermove", onMove);
+    root.addEventListener("pointerdown", onDown);
+    root.addEventListener("pointerup", onUp);
+    root.addEventListener("pointercancel", onUp);
+    root.addEventListener("pointerleave", onLeave);
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    raf = requestAnimationFrame(frame);
     return () => {
       cancelAnimationFrame(raf);
-      clearInterval(scramble);
-      window.removeEventListener("keydown", onKey);
-      pending.forEach(clearTimeout);
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+      root.removeEventListener("pointermove", onMove);
+      root.removeEventListener("pointerdown", onDown);
+      root.removeEventListener("pointerup", onUp);
+      root.removeEventListener("pointercancel", onUp);
+      root.removeEventListener("pointerleave", onLeave);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
     };
-  }, [finish]);
-
-  const resolved = Math.min(INTRO_WORD.length, Math.floor((pct / 100 / 0.88) * INTRO_WORD.length));
-  const status = pct >= 100 ? "ready" : pct > 72 ? "rendering interface" : pct > 45 ? "compiling skills" : pct > 15 ? "loading projects" : "initialising";
+  }, [onReveal, onDone]);
 
   return (
-    <div className={`intro ${out ? "out" : ""}`} role="status" aria-label="Loading portfolio">
-      <div className="intro-p t" />
-      <div className="intro-p b" />
-      <div className="intro-seam" />
-      <div className="intro-c">
-        <div className="intro-top">
-          <span className="intro-mark">CFA</span>
-          <button className="intro-skip" onClick={finish}>Skip <i>→</i></button>
+    <>
+      <div ref={rootRef} className="gate" role="dialog" aria-label="Portfolio entrance. Press and hold anywhere, or hold the Space key, to enter.">
+        <div className="gate-cur" ref={curRef} aria-hidden />
+        <div className="gate-top gate-ui">
+          <span className="gate-brand">CFA — Portfolio {new Date().getFullYear()}</span>
+          <button className="gate-skip" onClick={() => skipRef.current()}>Skip <i>→</i></button>
         </div>
-        <div className="intro-mid">
-          <p className="intro-eyebrow">{"// "}{new Date().getFullYear()} · chava fahmy abid</p>
-          <h1 className="intro-word" aria-hidden>
-            {INTRO_WORD.map((ch, i) => {
-              const ok = i < resolved;
-              return (
-                <span key={i} className={`il ${ok ? "ok" : ""}`}
-                  style={ok ? { color: `hsl(${188 + (i / 8) * 95} 92% ${92 - (i / 8) * 14}%)` } : undefined}>
-                  {ok ? ch : glyphs[i]}
-                </span>
-              );
-            })}
+        <div className="gate-mid">
+          <h1 className="gate-word" ref={wordRef} aria-label="Portfolio">
+            {GATE_WORD.map((ch, i) => (
+              <span key={i} className="gl-w" style={{ animationDelay: `${0.15 + i * 0.07}s` }} aria-hidden>
+                <span className="gl" ref={el => { letterRefs.current[i] = el; }}>{ch}</span>
+              </span>
+            ))}
           </h1>
-          <p className="intro-sub">Software · Databases · UI/UX · Emerging Tech</p>
+          <p className="gate-sub gate-ui">Chava Fahmy Abid · Software · Databases · UI/UX</p>
         </div>
-        <div className="intro-bot">
-          <div className="intro-bar"><i style={{ width: `${pct}%` }} /></div>
-          <div className="intro-row"><span>&gt; {status}{pct < 100 ? "…" : ""}</span><span>{String(pct).padStart(3, "0")}%</span></div>
+        <div className="gate-bot gate-ui">
+          <p className="gate-hint">
+            <span className="hint-idle"><span className="hint-fine">Move your cursor · press &amp; hold to enter</span><span className="hint-touch">Touch &amp; hold to enter</span></span>
+            <span className="hint-hold">Keep holding… <span ref={pctRef}>000%</span></span>
+          </p>
+          <div className="gate-bar"><i ref={barRef} /></div>
         </div>
       </div>
-    </div>
+      <div className="gate-ring" ref={ringRef} aria-hidden />
+    </>
   );
 }
 
@@ -714,7 +854,7 @@ const css = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @property --ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
 
-.pf { --bg:#05060b; --line:rgba(255,255,255,.09); --txt:#e8ecf5; --mut:#8e96ab; --c1:#22d3ee; --c2:#8b5cf6; --c3:#f472b6; --amber:#fbbf24;
+.pf { --bg:#05060b; --line:rgba(255,255,255,.09); --txt:#e8ecf5; --mut:#8e96ab; --c1:#22d3ee; --c2:#8b5cf6; --c3:#a78bfa; --amber:#fbbf24;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   font-family:"Space Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--txt); }
 .pf, .pf *, .pf *::before, .pf *::after { box-sizing:border-box; }
@@ -733,7 +873,7 @@ const css = `
 .aurora i { position:absolute; border-radius:50%; filter:blur(90px); opacity:.5; }
 .aurora i:nth-child(1) { width:520px; height:520px; left:-120px; top:-80px; background:#0e7490; animation:drift1 22s ease-in-out infinite alternate; }
 .aurora i:nth-child(2) { width:480px; height:480px; right:-120px; top:25vh; background:#5b21b6; animation:drift2 26s ease-in-out infinite alternate; }
-.aurora i:nth-child(3) { width:420px; height:420px; left:30vw; bottom:-160px; background:#9d174d; opacity:.28; animation:drift3 30s ease-in-out infinite alternate; }
+.aurora i:nth-child(3) { width:420px; height:420px; left:30vw; bottom:-160px; background:#1e3a8a; opacity:.42; animation:drift3 30s ease-in-out infinite alternate; }
 .grain { position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.06; mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
 .cursor-glow { position:fixed; left:0; top:0; width:560px; height:560px; margin:-280px 0 0 -280px; z-index:1; pointer-events:none;
@@ -782,35 +922,37 @@ const css = `
 .ready .nav { animation:navIn 1s cubic-bezier(.2,.8,.2,1) .6s both; }
 .ready .mbar { animation:fade .9s ease .6s both; }
 
-/* intro */
-.intro { position:fixed; inset:0; z-index:500; display:grid; place-items:center; overflow:hidden; background:transparent; }
-.intro-p { position:absolute; left:0; right:0; height:50.3%; background:#05060b; transition:transform 1.05s cubic-bezier(.76,0,.24,1); will-change:transform; }
-.intro-p.t { top:0; } .intro-p.b { bottom:0; }
-.intro.out .intro-p { transition-delay:.45s; }
-.intro.out .intro-p.t { transform:translateY(-101%); }
-.intro.out .intro-p.b { transform:translateY(101%); }
-.intro-seam { position:absolute; z-index:4; left:50%; top:50%; width:0; height:2px; transform:translate(-50%,-50%); opacity:0; background:linear-gradient(90deg,transparent,#67e8f9,#fff,#a78bfa,transparent); box-shadow:0 0 34px 4px rgba(34,211,238,.7); }
-.intro.out .intro-seam { animation:seam 1.1s cubic-bezier(.7,0,.2,1) both; }
-.intro-c { position:relative; z-index:3; width:100%; height:100%; display:flex; flex-direction:column; justify-content:space-between; padding:28px clamp(20px,5vw,56px); transition:opacity .5s ease, transform .6s ease, filter .5s ease;
-  background:radial-gradient(60% 50% at 50% 50%,rgba(34,211,238,.10),transparent 70%), radial-gradient(40% 40% at 85% 85%,rgba(139,92,246,.14),transparent 70%); }
-.intro-c::before { content:""; position:absolute; inset:0; opacity:.5; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px); background-size:56px 56px; -webkit-mask-image:radial-gradient(70% 60% at 50% 50%,#000,transparent); mask-image:radial-gradient(70% 60% at 50% 50%,#000,transparent); }
-.intro.out .intro-c { opacity:0; transform:scale(1.14); filter:blur(10px); }
-.intro-top, .intro-mid, .intro-bot { position:relative; }
-.intro-top { display:flex; justify-content:space-between; align-items:center; }
-.intro-mark { font-weight:700; letter-spacing:.06em; padding:8px 14px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.04); }
-.intro-skip { font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--mut); padding:9px 14px; border-radius:999px; border:1px solid var(--line); transition:color .2s, border-color .2s; }
-.intro-skip:hover { color:#fff; border-color:rgba(34,211,238,.6); }
-.intro-skip i { font-style:normal; display:inline-block; transition:transform .2s; } .intro-skip:hover i { transform:translateX(4px); }
-.intro-mid { text-align:center; }
-.intro-eyebrow { font-family:var(--mono); font-size:clamp(.72rem,1.4vw,.9rem); letter-spacing:.22em; text-transform:uppercase; color:var(--c1); margin-bottom:clamp(14px,3vw,26px); animation:fade .8s ease both; }
-.intro-word { display:flex; justify-content:center; font-size:clamp(2.5rem,12.4vw,10.5rem); font-weight:700; letter-spacing:-.03em; line-height:1; }
-.intro-word .il { display:inline-block; min-width:.55em; color:rgba(148,163,184,.38); font-family:var(--mono); font-weight:500; transition:color .2s; }
-.intro-word .il.ok { min-width:0; font-family:inherit; font-weight:700; animation:lock .6s cubic-bezier(.2,.9,.3,1) both; text-shadow:0 0 50px rgba(34,211,238,.35); }
-.intro-sub { margin-top:clamp(14px,3vw,26px); color:var(--mut); font-size:clamp(.78rem,1.6vw,1rem); letter-spacing:.18em; text-transform:uppercase; animation:fade 1s .5s ease both; }
-.intro-bar { height:3px; border-radius:3px; background:rgba(255,255,255,.08); overflow:hidden; }
-.intro-bar i { display:block; height:100%; background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3)); box-shadow:0 0 16px rgba(34,211,238,.8); }
-.intro-row { display:flex; justify-content:space-between; margin-top:12px; font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--mut); }
-.intro-row span:last-child { color:#fff; }
+
+/* gate */
+.gate { position:fixed; inset:0; z-index:500; background:var(--bg); overflow:hidden; touch-action:none; user-select:none; -webkit-user-select:none; display:flex; flex-direction:column; justify-content:space-between; padding:26px clamp(20px,5vw,56px); }
+.gate::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(440px circle at var(--mx,50%) var(--my,50%),rgba(34,211,238,.14),transparent 70%), radial-gradient(90% 75% at 50% 50%,transparent 45%,rgba(0,0,0,.5)); }
+.gate::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:.5; background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.07) 1px,transparent 0); background-size:34px 34px; -webkit-mask-image:radial-gradient(60% 55% at 50% 50%,#000,transparent); mask-image:radial-gradient(60% 55% at 50% 50%,#000,transparent); }
+.gate.portal { -webkit-mask-image:radial-gradient(circle at var(--ox) var(--oy),transparent var(--hole),#000 calc(var(--hole) + 1.5px)); mask-image:radial-gradient(circle at var(--ox) var(--oy),transparent var(--hole),#000 calc(var(--hole) + 1.5px)); }
+.gate-ui { transition:opacity .35s ease; }
+.gate.bursting .gate-ui { opacity:0; }
+.gate-top, .gate-mid, .gate-bot { position:relative; z-index:2; }
+.gate-top { display:flex; justify-content:space-between; align-items:center; }
+.gate-brand { font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--mut); }
+.gate-skip { font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--mut); padding:9px 14px; border-radius:999px; border:1px solid var(--line); transition:color .2s, border-color .2s; }
+.gate-skip:hover { color:#fff; border-color:rgba(103,232,249,.6); }
+.gate-skip i { font-style:normal; display:inline-block; transition:transform .2s; } .gate-skip:hover i { transform:translateX(4px); }
+.gate-mid { text-align:center; }
+.gate-word { display:flex; justify-content:center; position:relative; font-size:clamp(2.4rem,12.8vw,11rem); font-weight:700; letter-spacing:-.035em; line-height:1.05; will-change:transform; }
+.gl-w { display:inline-block; animation:glIn 1.1s cubic-bezier(.2,.8,.2,1) both; }
+.gl { display:inline-block; color:#e8ecf5; opacity:.2; will-change:transform,opacity; }
+.gate-sub { margin-top:clamp(14px,3vw,26px); color:var(--mut); font-size:clamp(.74rem,1.5vw,.95rem); letter-spacing:.2em; text-transform:uppercase; animation:fade 1.2s .9s ease both; }
+.gate-bot { text-align:center; }
+.gate-hint { font-family:var(--mono); font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--mut); animation:hintPulse 2.6s ease-in-out infinite; }
+.hint-hold { display:none; color:#e8ecf5; }
+.gate.charging .hint-idle { display:none; } .gate.charging .hint-hold { display:inline; } .gate.charging .gate-hint { animation:none; }
+.gate-bar { width:min(260px,60vw); height:2px; margin:14px auto 0; border-radius:2px; background:rgba(255,255,255,.1); overflow:hidden; }
+.gate-bar i { display:block; height:100%; background:linear-gradient(90deg,#67e8f9,#e8ecf5); transform-origin:left; transform:scaleX(0); }
+.gate-cur { position:absolute; left:0; top:0; width:38px; height:38px; margin:-19px 0 0 -19px; border-radius:50%; border:1px solid rgba(232,236,245,.5); pointer-events:none; z-index:4; opacity:0; transition:opacity .3s; will-change:transform; }
+.gate-cur.on { opacity:1; }
+.gate-ring { position:fixed; z-index:501; left:0; top:0; border-radius:50%; border:1.5px solid rgba(103,232,249,.7); box-shadow:0 0 70px rgba(34,211,238,.3), inset 0 0 70px rgba(34,211,238,.12); pointer-events:none; opacity:0; will-change:transform,width,height; }
+@media (hover:none) { .gate-cur { display:none; } .hint-fine { display:none; } }
+@media (hover:hover) { .hint-touch { display:none; } }
+
 .role { overflow-wrap:anywhere; font-family:var(--mono); font-size:clamp(.78rem,1.6vw,1.05rem); color:var(--c1); letter-spacing:.04em; margin-bottom:14px; }
 .typed { font-size:clamp(1.15rem,2.4vw,1.6rem); font-weight:500; color:#fff; min-height:2.1em; }
 .typed em { font-style:normal; color:var(--mut); }
@@ -819,7 +961,7 @@ const css = `
 .cta-row { display:flex; flex-wrap:wrap; gap:14px; }
 .mag { display:inline-block; transition:transform .25s cubic-bezier(.2,.7,.2,1); }
 .btn { position:relative; display:inline-flex; align-items:center; gap:8px; padding:14px 26px; border-radius:14px; font-weight:600; font-size:.95rem; overflow:hidden; transition:box-shadow .3s, border-color .3s, color .3s; }
-.btn.primary { color:#041016; background:linear-gradient(120deg,#67e8f9,#22d3ee 45%,#a78bfa); box-shadow:0 8px 30px rgba(34,211,238,.28); }
+.btn.primary { color:#05060b; background:linear-gradient(120deg,#67e8f9,#22d3ee 45%,#a78bfa); box-shadow:0 8px 30px rgba(34,211,238,.28); }
 .btn.primary::after { content:""; position:absolute; top:0; left:-120%; width:60%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:skewX(-20deg); animation:sheen 3.8s ease-in-out infinite; }
 .btn.primary:hover { box-shadow:0 10px 44px rgba(34,211,238,.5); }
 .btn.ghost { border:1px solid var(--line); background:rgba(255,255,255,.04); color:#e2e8f0; }
@@ -827,7 +969,7 @@ const css = `
 .hero-vis { display:flex; justify-content:center; }
 .orbit { position:relative; width:400px; height:400px; flex:none; }
 .orbit-core { position:absolute; left:50%; top:50%; width:128px; height:128px; margin:-64px 0 0 -64px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:2rem; letter-spacing:-.03em; background:radial-gradient(circle at 30% 25%,#13202e,#070a12); z-index:2; }
-.orbit-core::before { content:""; position:absolute; inset:-3px; border-radius:50%; background:conic-gradient(from var(--ang),#22d3ee,#8b5cf6,#f472b6,#22d3ee); z-index:-1; animation:rot 5s linear infinite; filter:drop-shadow(0 0 18px rgba(34,211,238,.55)); }
+.orbit-core::before { content:""; position:absolute; inset:-3px; border-radius:50%; background:conic-gradient(from var(--ang),#22d3ee,#8b5cf6,#6366f1,#22d3ee); z-index:-1; animation:rot 5s linear infinite; filter:drop-shadow(0 0 18px rgba(34,211,238,.55)); }
 .orbit-core span { background:linear-gradient(135deg,#fff,#67e8f9); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .ring { position:absolute; left:50%; top:50%; width:calc(var(--r) * 2); height:calc(var(--r) * 2); margin:calc(var(--r) * -1) 0 0 calc(var(--r) * -1); border:1px dashed rgba(255,255,255,.15); border-radius:50%; animation:spin var(--d) linear infinite; }
 .ring.b { animation-direction:reverse; }
@@ -931,8 +1073,10 @@ const css = `
 /* skills */
 .skill-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
 .skill { padding:26px; }
-.skill-head { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
-.skill-ic { width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-size:1.15rem; border:1px solid color-mix(in srgb,var(--c) 45%,transparent); background:color-mix(in srgb,var(--c) 14%,transparent); }
+.skill-head { display:flex; align-items:center; gap:16px; margin-bottom:20px; }
+.skill-dot { width:10px; height:10px; border-radius:50%; flex:none; background:var(--c); box-shadow:0 0 0 5px color-mix(in srgb,var(--c) 16%,transparent),0 0 18px color-mix(in srgb,var(--c) 70%,transparent); }
+.aw-dot { width:6px; height:6px; border-radius:50%; flex:none; background:var(--c1); box-shadow:0 0 10px var(--c1); }
+.ach-tag { display:inline-block; margin-bottom:14px; font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--c1); }
 .skill-head h3 { font-size:1.12rem; }
 .chips { display:flex; flex-wrap:wrap; gap:8px; }
 .skill-row { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:18px; }
@@ -943,7 +1087,7 @@ const css = `
 .bar { height:6px; border-radius:6px; background:rgba(255,255,255,.07); overflow:hidden; }
 .bar i { display:block; height:100%; border-radius:6px; background:linear-gradient(90deg,var(--c1),var(--c2)); box-shadow:0 0 12px rgba(34,211,238,.5); transition:width 1.5s cubic-bezier(.2,.7,.2,1); }
 .soft { display:grid; gap:10px; }
-.soft div { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:12px; font-size:.9rem; border:1px solid var(--line); background:rgba(255,255,255,.03); transition:transform .25s, border-color .25s; }
+.soft div { display:flex; align-items:center; gap:14px; padding:10px 14px; border-radius:12px; font-size:.9rem; border:1px solid var(--line); background:rgba(255,255,255,.03); transition:transform .25s, border-color .25s; }
 .soft div:hover { transform:translateX(6px); border-color:rgba(34,211,238,.4); }
 
 /* projects */
@@ -998,7 +1142,6 @@ const css = `
 /* achievements */
 .ach-top { display:grid; grid-template-columns:1.3fr 1fr; gap:20px; margin-bottom:56px; }
 .ach { padding:30px; }
-.ach-ic { font-size:2rem; margin-bottom:14px; display:inline-block; }
 .ach h3 { font-size:1.35rem; letter-spacing:-.02em; line-height:1.3; }
 .ach .org { font-size:.88rem; margin:6px 0 14px; }
 .ach p.txt { color:#aeb6c9; line-height:1.7; font-size:.94rem; }
@@ -1009,8 +1152,8 @@ const css = `
 .award { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:15px 0; border-bottom:1px solid var(--line); animation:rowIn .55s cubic-bezier(.2,.7,.2,1) both; }
 .award:last-of-type { border-bottom:0; }
 .award div { display:flex; align-items:center; gap:14px; font-size:.95rem; }
-.award div span { font-size:1.2rem; width:28px; text-align:center; }
 .award time { font-family:var(--mono); font-size:12px; color:var(--mut); white-space:nowrap; }
+.award div { gap:16px; }
 .more-btn { display:block; width:100%; margin:6px 0 16px; padding:12px; border-radius:12px; font-size:.88rem; text-align:center; color:var(--mut); border:1px dashed var(--line); transition:color .25s, border-color .25s; }
 .more-btn:hover { color:var(--c1); border-color:rgba(34,211,238,.5); }
 
@@ -1019,16 +1162,16 @@ const css = `
 .cert { padding:28px; display:flex; flex-direction:column; min-height:230px; }
 .cert-glow { position:absolute !important; right:-40px; top:-40px; width:140px; height:140px; border-radius:50%; filter:blur(50px); opacity:.22; transition:opacity .4s; z-index:0 !important; }
 .cert:hover .cert-glow { opacity:.5; }
-.cert-icon { font-size:2rem; margin-bottom:16px; }
+.cert-num { font-family:var(--mono); font-size:1.5rem; font-weight:500; letter-spacing:.04em; margin-bottom:18px; opacity:.9; }
 .cert-tier { align-self:flex-start; font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:12px; border:1px solid color-mix(in srgb,var(--c) 50%,transparent); color:var(--c); background:color-mix(in srgb,var(--c) 10%,transparent); }
 .cert h3 { font-size:1.15rem; letter-spacing:-.01em; }
 .cert p { color:var(--mut); font-size:.85rem; margin:6px 0 18px; }
 
 /* contact */
 .cta { position:relative; padding:64px 48px; border-radius:30px; text-align:center; background:radial-gradient(120% 140% at 50% 0%,rgba(34,211,238,.1),rgba(8,10,18,.9) 60%); overflow:hidden; }
-.cta::before { content:""; position:absolute; inset:0; border-radius:30px; padding:1.5px; background:conic-gradient(from var(--ang),#22d3ee,#8b5cf6,#f472b6,#22d3ee); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:rot 6s linear infinite; pointer-events:none; }
+.cta::before { content:""; position:absolute; inset:0; border-radius:30px; padding:1.5px; background:conic-gradient(from var(--ang),#22d3ee,#8b5cf6,#6366f1,#22d3ee); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:rot 6s linear infinite; pointer-events:none; }
 .cta h2 { font-size:clamp(2.2rem,5.6vw,4.2rem); letter-spacing:-.04em; line-height:1.05; font-weight:700; }
-.cta h2 span { background:linear-gradient(120deg,#67e8f9,#a78bfa,#f472b6); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.cta h2 span { background:linear-gradient(120deg,#67e8f9,#a78bfa,#818cf8); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .cta p { color:var(--mut); max-width:480px; margin:18px auto 34px; line-height:1.7; }
 .cta .cta-row { justify-content:center; }
 .footer { position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:30px 24px 40px; max-width:1120px; margin:0 auto; color:var(--mut); font-size:.85rem; border-top:1px solid var(--line); }
@@ -1041,8 +1184,8 @@ const css = `
 @keyframes heroIn { from { opacity:0; transform:translateY(34px); filter:blur(8px); } to { opacity:1; transform:none; filter:none; } }
 @keyframes popIn { from { opacity:0; transform:scale(.55) rotate(-24deg); filter:blur(10px); } to { opacity:1; transform:none; filter:none; } }
 @keyframes navIn { from { opacity:0; transform:translate(-50%,-44px); } to { opacity:1; transform:translateX(-50%); } }
-@keyframes seam { 0% { width:0; opacity:1; } 55% { width:100%; opacity:1; } 100% { width:100%; opacity:0; } }
-@keyframes lock { 0% { transform:translateY(-14px) scale(1.25); filter:blur(6px); text-shadow:-6px 0 #22d3ee, 6px 0 #f472b6; } 60% { text-shadow:-3px 0 #22d3ee, 3px 0 #f472b6; } 100% { transform:none; filter:none; } }
+@keyframes glIn { from { opacity:0; filter:blur(14px); } }
+@keyframes hintPulse { 50% { opacity:.45; } }
 @keyframes blink { 50% { opacity:0; } }
 @keyframes ping { 0% { box-shadow:0 0 0 0 rgba(34,211,238,.6); } 80%,100% { box-shadow:0 0 0 12px rgba(34,211,238,0); } }
 @keyframes spin { to { transform:rotate(360deg); } }
@@ -1080,14 +1223,14 @@ const css = `
   .footer { flex-direction:column; text-align:center; }
   .scroll-cue { display:none; }
   .award { align-items:flex-start; flex-direction:column; gap:4px; }
-  .award time { padding-left:42px; }
+  .award time { padding-left:22px; }
 }
 @media (hover:none) { .cursor-glow { display:none; } }
 @media (prefers-reduced-motion:reduce) {
   .rv { opacity:1; transform:none; filter:none; transition:none; }
   .name .ch { opacity:1; transform:none; animation:none !important; }
   .hin, .hin-pop { opacity:1 !important; animation:none !important; }
-  .intro { display:none; }
+  .gate, .gate-ring { display:none; }
   .aurora i, .ring, .chip-in, .marq-track, .orbit-core::before, .cta::before, .btn.primary::after, .dot, .scroll-cue::after { animation:none !important; }
   .tl-line { transform:none; transition:none; }
 }
@@ -1168,7 +1311,7 @@ export default function Home() {
   return (
     <div className={`pf pf-main ${ready ? "ready" : ""}`}>
       <style dangerouslySetInnerHTML={{ __html: css }} />
-      {introOn && <Intro onReveal={reveal} onDone={introDone} />}
+      {introOn && <Gate onReveal={reveal} onDone={introDone} />}
 
       <div className="progress" style={{ width: `${progress}%` }} />
       <div className="aurora" aria-hidden><i /><i /><i /></div>
@@ -1207,7 +1350,7 @@ export default function Home() {
                       const i = letterIdx++;
                       const t = i / (nameTotal - 1);
                       return (
-                        <span key={ci} className="ch" style={{ animationDelay: `${0.25 + i * 0.05}s`, color: `hsl(${188 + t * 95} 92% ${92 - t * 14}%)` }}>{ch}</span>
+                        <span key={ci} className="ch" style={{ animationDelay: `${0.25 + i * 0.05}s`, color: `hsl(${188 + t * 70} 92% ${92 - t * 14}%)` }}>{ch}</span>
                       );
                     })}
                   </span>
@@ -1226,12 +1369,12 @@ export default function Home() {
               <div className="orbit">
                 <div className="orbit-core"><span>CFA</span></div>
                 <div className="ring a" style={{ "--r": "118px", "--d": "34s" } as CSSProperties}>
-                  {[{ t: "Figma", c: "#f472b6" }, { t: "HTML", c: "#f87171" }, { t: "AI", c: "#e879f9" }].map((c, i) => (
+                  {[{ t: "Figma", c: "#fbbf24" }, { t: "HTML", c: "#f97316" }, { t: "AI", c: "#c084fc" }].map((c, i) => (
                     <div key={c.t} className="chip" style={{ "--a": `${i * 120}deg`, "--c": c.c } as CSSProperties}><div className="chip-un"><div className="chip-in"><span>{c.t}</span></div></div></div>
                   ))}
                 </div>
                 <div className="ring b" style={{ "--r": "182px", "--d": "52s" } as CSSProperties}>
-                  {[{ t: "Python", c: "#60a5fa" }, { t: "PHP", c: "#a78bfa" }, { t: "C#", c: "#4ade80" }, { t: "MySQL", c: "#fb923c" }, { t: "JS", c: "#facc15" }].map((c, i) => (
+                  {[{ t: "Python", c: "#60a5fa" }, { t: "PHP", c: "#a78bfa" }, { t: "C#", c: "#4ade80" }, { t: "MySQL", c: "#38bdf8" }, { t: "JS", c: "#facc15" }].map((c, i) => (
                     <div key={c.t} className="chip" style={{ "--a": `${i * 72 + 20}deg`, "--c": c.c } as CSSProperties}><div className="chip-un"><div className="chip-in"><span>{c.t}</span></div></div></div>
                   ))}
                 </div>
@@ -1291,17 +1434,17 @@ export default function Home() {
           <div className="interests">
             <Reveal delay={0.1}>
               <Tilt className="interest">
-                <h3>🥊 Sports</h3>
+                <h3>Sports</h3>
                 <div className="pills">
-                  {[["Muaythai", "🥊"], ["Kickboxing", "🦵"], ["Boxing", "🥋"], ["Basketball", "🏀"], ["Table Tennis", "🏓"], ["Swimming", "🏊"]].map(([n, ic]) => <span className="pill" key={n}>{ic} {n}</span>)}
+                  {["Muaythai", "Kickboxing", "Boxing", "Basketball", "Table Tennis", "Swimming"].map(n => <span className="pill" key={n}>{n}</span>)}
                 </div>
               </Tilt>
             </Reveal>
             <Reveal delay={0.2}>
               <Tilt className="interest">
-                <h3>🎯 Hobbies</h3>
+                <h3>Hobbies</h3>
                 <div className="pills">
-                  {[["Chess", "♟️"], ["Cafe Hopping", "☕"], ["Fashion", "👔"], ["Strategy Gaming", "🎮"], ["Cinema", "🎬"], ["Marvel Comics", "📚"]].map(([n, ic]) => <span className="pill" key={n}>{ic} {n}</span>)}
+                  {["Chess", "Cafe Hopping", "Fashion", "Strategy Gaming", "Cinema", "Marvel Comics"].map(n => <span className="pill" key={n}>{n}</span>)}
                 </div>
               </Tilt>
             </Reveal>
@@ -1351,7 +1494,7 @@ export default function Home() {
               <Reveal key={g.title} delay={(i % 2) * 0.1}>
                 <Tilt className="skill">
                   <div className="skill-head" style={{ "--c": g.hex } as CSSProperties}>
-                    <div className="skill-ic">{g.icon}</div><h3>{g.title}</h3>
+                    <span className="skill-dot" /><h3>{g.title}</h3>
                   </div>
                   <div className="chips">{g.items.map(t => <Tag key={t} tag={t} />)}</div>
                 </Tilt>
@@ -1363,15 +1506,15 @@ export default function Home() {
             <Reveal><LanguagesCard /></Reveal>
             <Reveal delay={0.1}>
               <Tilt className="skill">
-                <div className="skill-head" style={{ "--c": "#8b5cf6" } as CSSProperties}><div className="skill-ic">💻</div><h3>Everyday Tools</h3></div>
+                <div className="skill-head" style={{ "--c": "#8b5cf6" } as CSSProperties}><span className="skill-dot" /><h3>Everyday Tools</h3></div>
                 <div className="chips">{["MS Word", "MS Excel", "PowerPoint", "Google Docs", "Google Sheets", "Google Drive", "Zoom", "MS Teams", "Canva", "Figma"].map(t => <Tag key={t} tag={t} />)}</div>
               </Tilt>
             </Reveal>
             <Reveal delay={0.2}>
               <Tilt className="skill">
-                <div className="skill-head" style={{ "--c": "#34d399" } as CSSProperties}><div className="skill-ic">🤝</div><h3>Interpersonal</h3></div>
+                <div className="skill-head" style={{ "--c": "#34d399" } as CSSProperties}><span className="skill-dot" /><h3>Interpersonal</h3></div>
                 <div className="soft">
-                  {[["💬", "Communication"], ["👥", "Teamwork & Collaboration"], ["👂", "Active Listening"], ["🧩", "Problem Solving"], ["🔄", "Adaptability"], ["🎯", "Leadership"]].map(([ic, s]) => <div key={s}><span>{ic}</span>{s}</div>)}
+                  {["Communication", "Teamwork & Collaboration", "Active Listening", "Problem Solving", "Adaptability", "Leadership"].map(x => <div key={x}><span className="aw-dot" />{x}</div>)}
                 </div>
               </Tilt>
             </Reveal>
@@ -1400,16 +1543,16 @@ export default function Home() {
           <div className="ach-top">
             <Reveal>
               <Tilt className="ach gold" max={3}>
-                <span className="ach-ic">🏆</span>
+                <span className="ach-tag" style={{ color: "var(--amber)" }}>Hackathon</span>
                 <h3>4th Place — Invent for the Planet 2025</h3>
                 <p className="org">UTP &amp; Texas A&amp;M University · 9 February 2025</p>
                 <p className="txt">Developed and managed a website/software system integrated with drone hardware. Built a secure login system, displayed real-time drone readings, and integrated an AI-powered assistant feature for users.</p>
-                <PhotoButton id="iftp" title="4th Place — Invent for the Planet 2025" subtitle="🏆 UTP & Texas A&M University" />
+                <PhotoButton id="iftp" title="4th Place — Invent for the Planet 2025" subtitle="UTP & Texas A&M University" />
               </Tilt>
             </Reveal>
             <Reveal delay={0.12}>
               <Tilt className="ach blue">
-                <span className="ach-ic">🎓</span>
+                <span className="ach-tag">Academic</span>
                 <h3>Dean&apos;s List</h3>
                 <p className="org">Universiti Teknologi PETRONAS · January 2025</p>
                 <p className="txt">GPA 3.64 — Academic excellence recognition for outstanding semester performance.</p>
@@ -1422,7 +1565,7 @@ export default function Home() {
             <Tilt className="award-list">
               {visibleAwards.map((a, i) => (
                 <div key={a.award} className="award" style={{ animationDelay: `${(showAllAwards ? Math.max(0, i - 6) : i) * 0.05}s` }}>
-                  <div><span>{a.icon}</span>{a.award}</div>
+                  <div><span className="aw-dot" />{a.award}</div>
                   <time>{a.date}</time>
                 </div>
               ))}
@@ -1443,12 +1586,12 @@ export default function Home() {
             <TlItem>
               <Tilt className="tl-card">
                 <div className="tl-head">
-                  <div><h3>☀️ Treasurer (HICOM)</h3><p className="org" style={{ color: "#34d399" }}>Native Power Project · MPU4 Community Project</p></div>
+                  <div><h3>Treasurer (HICOM)</h3><p className="org" style={{ color: "#34d399" }}>Native Power Project · MPU4 Community Project</p></div>
                   <span className="date">25–26 April 2026</span>
                 </div>
                 <p className="tl-text">Served as Treasurer in the Higher Committee (HICOM) for the Native Power Project, a community initiative focused on installing solar-powered lighting systems in a rural village in Malaysia. Responsible for managing the project&apos;s finances, budgeting, and fund allocation throughout the planning and execution phases.</p>
                 <div className="tl-tags">{["Community Service", "Project Management", "Treasurer", "Solar Energy", "Rural Development"].map(t => <Tag key={t} tag={t} />)}</div>
-                <PhotoButton id="exp" title="Native Power Project" subtitle="☀️ Treasurer (HICOM) · MPU4 Community Project" />
+                <PhotoButton id="exp" title="Native Power Project" subtitle="Treasurer (HICOM) · MPU4 Community Project" />
               </Tilt>
             </TlItem>
           </Timeline>
@@ -1459,7 +1602,7 @@ export default function Home() {
             <TlItem>
               <Tilt className="tl-card">
                 <div className="tl-head">
-                  <div><h3>🏆 Captain</h3><p className="org">Batari School · Part-time</p><p className="tl-note">Medan, North Sumatra, Indonesia · On-site</p></div>
+                  <div><h3>Captain</h3><p className="org">Batari School · Part-time</p><p className="tl-note">Medan, North Sumatra, Indonesia · On-site</p></div>
                   <span className="date">Sep 2023 – Oct 2023</span>
                 </div>
                 <p className="tl-text">Served as Team Captain during the school&apos;s annual Sports Day, leading a large group of students competing across various sporting events. Coordinated participant selection and event assignments based on individual strengths and abilities to maximize team performance. Facilitated communication, teamwork, and event planning throughout the competition, contributing to the team&apos;s overall 2nd place finish. Developed leadership, decision-making, organizational, and team management skills through the experience.</p>
@@ -1469,7 +1612,7 @@ export default function Home() {
             <TlItem delay={0.12}>
               <Tilt className="tl-card">
                 <div className="tl-head">
-                  <div><h3>🎤 Student Debater</h3><p className="org">Batari School · Part-time</p><p className="tl-note">Medan, North Sumatra, Indonesia · Hybrid</p></div>
+                  <div><h3>Student Debater</h3><p className="org">Batari School · Part-time</p><p className="tl-note">Medan, North Sumatra, Indonesia · Hybrid</p></div>
                   <span className="date">Jan 2022 – Feb 2022</span>
                 </div>
                 <p className="tl-text">Represented my team in competitive debate competitions, delivering structured arguments and responding to opposing viewpoints under time constraints. Reached the finals of a debate competition while developing strong communication, analytical thinking, public speaking, and teamwork skills.</p>
@@ -1486,7 +1629,7 @@ export default function Home() {
           <SectionHead index="07" label="Credentials" title="Certificates" />
           <div className="cert-grid">
             {certifications.map((c, i) => (
-              <Reveal key={c.name} delay={(i % 3) * 0.1}><CertCard cert={c} /></Reveal>
+              <Reveal key={c.name} delay={(i % 3) * 0.1}><CertCard cert={c} index={i} /></Reveal>
             ))}
           </div>
         </div>
@@ -1501,8 +1644,8 @@ export default function Home() {
               <h2>Let&apos;s build something <span>great together.</span></h2>
               <p>Always happy to talk about projects, collaborations or technology. Send me a message.</p>
               <div className="cta-row">
-                <Magnetic><a className="btn primary" href="mailto:m_24004897@utp.edu.my">✉️ m_24004897@utp.edu.my</a></Magnetic>
-                <Magnetic><a className="btn ghost" href="https://linkedin.com/in/chavaabid" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a></Magnetic>
+                <Magnetic><a className="btn primary" href="mailto:m_24004897@utp.edu.my">m_24004897@utp.edu.my</a></Magnetic>
+                <Magnetic><a className="btn ghost" href="https://linkedin.com/in/chavaabid" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></Magnetic>
               </div>
             </div>
           </Reveal>
@@ -1511,7 +1654,7 @@ export default function Home() {
 
       <footer className="footer">
         <span>© {new Date().getFullYear()} Chava Fahmy Abid</span>
-        <span>Designed &amp; built with Next.js</span>
+       
       </footer>
 
       <button className={`top-btn ${showTop ? "show" : ""}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top">↑</button>
@@ -1524,7 +1667,7 @@ function LanguagesCard() {
   return (
     <div ref={ref}>
       <Tilt className="skill">
-        <div className="skill-head" style={{ "--c": "#22d3ee" } as CSSProperties}><div className="skill-ic">🌐</div><h3>Languages</h3></div>
+        <div className="skill-head" style={{ "--c": "#22d3ee" } as CSSProperties}><span className="skill-dot" /><h3>Languages</h3></div>
         {[{ l: "Bahasa Indonesia", lv: "Native", p: 100 }, { l: "English", lv: "Proficient", p: 95 }, { l: "Bahasa Melayu", lv: "Proficient", p: 75 }].map(x => (
           <div className="lang" key={x.l}>
             <div className="lang-top"><span>{x.l}</span><span>{x.lv}</span></div>
