@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 const prefersReduced = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function useInView<T extends HTMLElement = HTMLDivElement>(threshold = 0.15) {
+function useInView<T extends HTMLElement = HTMLDivElement>(threshold = 0.15, margin = "0px 0px -6% 0px") {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
@@ -16,24 +16,50 @@ function useInView<T extends HTMLElement = HTMLDivElement>(threshold = 0.15) {
     if (prefersReduced() || typeof IntersectionObserver === "undefined") { setInView(true); return; }
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) { setInView(true); io.disconnect(); }
-    }, { threshold });
+    }, { threshold, rootMargin: margin });
     io.observe(el);
     return () => io.disconnect();
-  }, [threshold]);
+  }, [threshold, margin]);
   return [ref, inView] as const;
 }
 
-function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
+/* One shared, rAF-throttled scroll loop for everything that reacts to scrolling. */
+const scrollSubs = new Set<() => void>();
+let scrollTicking = false;
+let scrollInstalled = false;
+const runScrollSubs = () => { scrollTicking = false; scrollSubs.forEach(fn => fn()); };
+const onAnyScroll = () => { if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(runScrollSubs); } };
+function subscribeScroll(fn: () => void) {
+  scrollSubs.add(fn);
+  if (!scrollInstalled) {
+    window.addEventListener("scroll", onAnyScroll, { passive: true });
+    window.addEventListener("resize", onAnyScroll);
+    scrollInstalled = true;
+  }
+  fn();
+  return () => {
+    scrollSubs.delete(fn);
+    if (!scrollSubs.size) {
+      window.removeEventListener("scroll", onAnyScroll);
+      window.removeEventListener("resize", onAnyScroll);
+      scrollInstalled = false;
+    }
+  };
+}
+
+type From = "up" | "left" | "right" | "zoom";
+
+function Reveal({ children, delay = 0, className = "", from = "up" }: { children: ReactNode; delay?: number; className?: string; from?: From }) {
   const [ref, inView] = useInView();
   return (
-    <div ref={ref} className={`rv ${inView ? "in" : ""} ${className}`} style={{ transitionDelay: `${delay}s` }}>
+    <div ref={ref} className={`rv rv-${from} ${inView ? "in" : ""} ${className}`} style={{ transitionDelay: `${delay}s` }}>
       {children}
     </div>
   );
 }
 
 function CountUp({ to, decimals = 0, fmt, duration = 1700, go = true }: { to: number; decimals?: number; fmt?: (n: number) => string; duration?: number; go?: boolean }) {
-  const [ref, inView] = useInView<HTMLSpanElement>(0.4);
+  const [ref, inView] = useInView<HTMLSpanElement>(0.4, "0px");
   const [v, setV] = useState(0);
   useEffect(() => {
     if (!inView || !go) return;
@@ -179,82 +205,90 @@ function Modal({ open, onClose, children, bare = false }: { open: boolean; onClo
 
 /* ═══════════════════════════ Background effects ═══════════════════════════ */
 
-function ParticleField() {
+function Starfield() {
   const ref = useRef<HTMLCanvasElement>(null);
+  const warpRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) return;
+    const canvas = ref.current, warp = warpRef.current;
+    if (!canvas || !warp) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const reduce = prefersReduced();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    type P = { x: number; y: number; vx: number; vy: number; r: number };
-    let w = 0, h = 0, raf = 0;
-    let ps: P[] = [];
-    const mouse = { x: -9999, y: -9999 };
+    type Star = { x: number; y: number; z: number; tw: number; cool: boolean };
+    let w = 0, h = 0, raf = 0, stars: Star[] = [];
+    let lastY = window.scrollY, v = 0;
+    const mouse = { x: 0.5, y: 0.5, sx: 0.5, sy: 0.5 };
+    let shoot: { x: number; y: number; vx: number; vy: number; life: number } | null = null;
+    let nextShoot = performance.now() + 4000;
 
     const resize = () => {
       w = window.innerWidth; h = window.innerHeight;
       canvas.width = w * dpr; canvas.height = h * dpr;
       canvas.style.width = `${w}px`; canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.min(85, Math.floor((w * h) / 18000));
-      ps = Array.from({ length: n }, () => ({
-        x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35, r: Math.random() * 1.4 + 0.6,
-      }));
+      const n = Math.max(90, Math.min(240, Math.floor((w * h) / 6500)));
+      stars = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, z: 0.15 + Math.pow(Math.random(), 2) * 0.85, tw: Math.random() * 6.28, cool: Math.random() < 0.22 }));
     };
 
-    const frame = () => {
+    const frame = (now: number) => {
+      const t = now / 1000;
+      const dy = window.scrollY - lastY;
+      lastY = window.scrollY;
+      v += (dy - v) * 0.22;
+      const speed = Math.abs(v);
+      mouse.sx += (mouse.x - mouse.sx) * 0.05; mouse.sy += (mouse.y - mouse.sy) * 0.05;
       ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < ps.length; i++) {
-        const p = ps[i];
+      ctx.lineCap = "round";
+      for (const st of stars) {
         if (!reduce) {
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < -10) p.x = w + 10; else if (p.x > w + 10) p.x = -10;
-          if (p.y < -10) p.y = h + 10; else if (p.y > h + 10) p.y = -10;
-          const mdx = p.x - mouse.x, mdy = p.y - mouse.y;
-          const md = Math.hypot(mdx, mdy);
-          if (md < 130 && md > 0) { p.x += (mdx / md) * 0.9; p.y += (mdy / md) * 0.9; }
+          st.y -= dy * st.z * 0.6 - 0.05 * st.z;
+          if (st.y < -130) st.y += h + 260; else if (st.y > h + 130) st.y -= h + 260;
         }
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(165,243,252,0.55)";
-        ctx.fill();
-        for (let j = i + 1; j < ps.length; j++) {
-          const q = ps[j];
-          const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < 125) {
-            ctx.strokeStyle = `rgba(103,232,249,${(1 - d / 125) * 0.22})`;
-            ctx.lineWidth = 0.7;
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-          }
-        }
-        const md2 = Math.hypot(p.x - mouse.x, p.y - mouse.y);
-        if (md2 < 180) {
-          ctx.strokeStyle = `rgba(167,139,250,${(1 - md2 / 180) * 0.5})`;
-          ctx.lineWidth = 0.9;
-          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+        const px = (mouse.sx - 0.5) * st.z * 22, py = (mouse.sy - 0.5) * st.z * 12;
+        const x = st.x + px, y = st.y + py;
+        const a = (0.3 + 0.7 * st.z) * (0.72 + 0.28 * Math.sin(t * (0.8 + st.z * 2) + st.tw));
+        const col = st.cool ? "170,215,255" : "235,240,255";
+        const streak = Math.min(150, speed * st.z * 2.1);
+        if (streak > 3) {
+          const dir = v > 0 ? 1 : -1;
+          const g = ctx.createLinearGradient(x, y, x, y + dir * streak);
+          g.addColorStop(0, `rgba(${col},${Math.min(1, a + 0.25)})`);
+          g.addColorStop(1, `rgba(${col},0)`);
+          ctx.strokeStyle = g; ctx.lineWidth = 0.6 + st.z * 1.5;
+          ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + dir * streak); ctx.stroke();
+        } else {
+          ctx.fillStyle = `rgba(${col},${a})`;
+          ctx.beginPath(); ctx.arc(x, y, 0.5 + st.z * 1.1, 0, Math.PI * 2); ctx.fill();
         }
       }
+      if (!reduce) {
+        if (!shoot && now > nextShoot) {
+          shoot = { x: Math.random() * w * 0.7 + w * 0.15, y: Math.random() * h * 0.35, vx: 16 + Math.random() * 6, vy: 7 + Math.random() * 4, life: 0 };
+          nextShoot = now + 5000 + Math.random() * 7000;
+        }
+        if (shoot) {
+          shoot.x += shoot.vx; shoot.y += shoot.vy; shoot.life += 1 / 55;
+          const al = Math.sin(Math.min(1, shoot.life) * Math.PI);
+          const g = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x - shoot.vx * 9, shoot.y - shoot.vy * 9);
+          g.addColorStop(0, `rgba(255,255,255,${al})`); g.addColorStop(1, "rgba(120,200,255,0)");
+          ctx.strokeStyle = g; ctx.lineWidth = 1.8;
+          ctx.beginPath(); ctx.moveTo(shoot.x, shoot.y); ctx.lineTo(shoot.x - shoot.vx * 9, shoot.y - shoot.vy * 9); ctx.stroke();
+          if (shoot.life >= 1) shoot = null;
+        }
+      }
+      warp.style.opacity = String(Math.min(1, speed / 60));
       if (!reduce) raf = requestAnimationFrame(frame);
     };
 
-    const onMove = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY; };
-    const onLeave = () => { mouse.x = -9999; mouse.y = -9999; };
+    const onMove = (e: MouseEvent) => { mouse.x = e.clientX / window.innerWidth; mouse.y = e.clientY / window.innerHeight; };
     resize();
-    frame();
+    raf = requestAnimationFrame(frame);
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMove, { passive: true });
-    document.addEventListener("mouseleave", onLeave);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseleave", onLeave);
-    };
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); window.removeEventListener("mousemove", onMove); };
   }, []);
-  return <canvas ref={ref} className="particles" aria-hidden />;
+  return <><canvas ref={ref} className="particles" aria-hidden /><div ref={warpRef} className="warp" aria-hidden /></>;
 }
 
 /* ═══════════════════════════ Data ═══════════════════════════ */
@@ -492,6 +526,114 @@ const ordinal = (n: number) => (n === 1 ? "1st" : n === 2 ? "2nd" : n === 3 ? "3
 
 const marqueeItems = ["Python", "C#", "C++", "PHP", "JavaScript", "HTML", "CSS", "MySQL", "SQLite", "SQL Server", "Figma", "Matplotlib", "REST APIs", "IoT", "UX Research", "Prototyping"];
 
+/* ═══════════════════════════ Planets ═══════════════════════════ */
+
+type PlanetDef = {
+  label: string; hex: string; glow: string; mini: string; tex: string;
+  size: number; side: "l" | "r"; top: string; k: number; spin: number; dim?: number;
+  ring?: { rs: number; tilt: number; sq: number; c1: string; c2: string };
+};
+
+// Every section is a "world". tex is one seamless tile (repeats horizontally) that slowly scrolls to fake rotation.
+const planets: Record<string, PlanetDef> = {
+  about: {
+    label: "Earth", hex: "#3b82f6", glow: "rgba(56,140,255,.5)", mini: "radial-gradient(circle at 30% 30%,#7dd3fc,#2563eb 55%,#0b2a6f)",
+    size: 380, side: "r", top: "-60px", k: -0.12, spin: 70,
+    tex: "radial-gradient(ellipse 20% 16% at 22% 38%,#3f9a5c 0 62%,transparent 64%),radial-gradient(ellipse 16% 22% at 68% 62%,#4aa468 0 62%,transparent 64%),radial-gradient(ellipse 12% 10% at 44% 72%,#3a8c52 0 60%,transparent 62%),radial-gradient(ellipse 28% 7% at 46% 24%,rgba(255,255,255,.6),transparent 70%),radial-gradient(ellipse 24% 6% at 80% 80%,rgba(255,255,255,.5),transparent 70%),radial-gradient(ellipse 22% 5% at 12% 58%,rgba(255,255,255,.4),transparent 70%),linear-gradient(180deg,#e6f0ff 0,#1b56b8 12%,#1f6fd8 50%,#154596 88%,#e6f0ff 100%)",
+  },
+  education: {
+    label: "Moon", hex: "#94a3b8", glow: "rgba(190,205,230,.28)", mini: "radial-gradient(circle at 30% 30%,#e2e8f0,#94a3b8 55%,#475569)",
+    size: 300, side: "l", top: "34%", k: -0.62, spin: 120, dim: 0.85,
+    tex: "radial-gradient(circle at 25% 35%,rgba(0,0,0,.3) 0 7%,transparent 8%),radial-gradient(circle at 62% 26%,rgba(0,0,0,.24) 0 5%,transparent 6%),radial-gradient(circle at 48% 68%,rgba(0,0,0,.32) 0 9%,transparent 10%),radial-gradient(circle at 82% 70%,rgba(0,0,0,.22) 0 6%,transparent 7%),radial-gradient(circle at 10% 74%,rgba(0,0,0,.26) 0 5%,transparent 6%),linear-gradient(180deg,#b3b9c3,#868c97)",
+  },
+  skills: {
+    label: "Jupiter", hex: "#d97706", glow: "rgba(217,140,60,.42)", mini: "linear-gradient(180deg,#e8cfa8,#b77c4e 50%,#7d4a2c)",
+    size: 440, side: "r", top: "-120px", k: -0.18, spin: 55,
+    tex: "radial-gradient(ellipse 14% 7% at 62% 63%,#c4492a 0 58%,rgba(196,73,42,0) 100%),linear-gradient(180deg,#8a5a3a 0,#c79a6b 8%,#ead3ac 14%,#b77c4e 22%,#9a5b36 30%,#e0b98a 38%,#f3dfbc 46%,#c28a5a 54%,#8f5634 62%,#d9a877 70%,#efd6ac 78%,#b4743f 86%,#7d4a2c 100%)",
+  },
+  projects: {
+    label: "Saturn", hex: "#e6c98a", glow: "rgba(230,200,130,.38)", mini: "linear-gradient(180deg,#f0e0b6,#c9ae78 60%,#a98d58)",
+    size: 280, side: "r", top: "-40px", k: -0.06, spin: 60,
+    ring: { rs: 2.5, tilt: -16, sq: 0.26, c1: "rgba(222,196,140,.7)", c2: "rgba(190,165,115,.5)" },
+    tex: "linear-gradient(180deg,#b79a63,#e6cf9a 15%,#cdb27a 30%,#f2e3ba 48%,#c9ae78 66%,#e2c98f 82%,#a98d58)",
+  },
+  achievements: {
+    label: "Mars", hex: "#ea580c", glow: "rgba(234,100,40,.38)", mini: "radial-gradient(circle at 30% 30%,#fdba74,#c2410c 55%,#6b2208)",
+    size: 330, side: "r", top: "-70px", k: -0.1, spin: 90,
+    tex: "radial-gradient(ellipse 12% 10% at 30% 46%,rgba(80,25,8,.6),transparent 70%),radial-gradient(ellipse 16% 9% at 72% 58%,rgba(70,22,6,.5),transparent 70%),radial-gradient(ellipse 30% 9% at 50% 4%,rgba(255,255,255,.75),transparent 70%),radial-gradient(ellipse 22% 7% at 50% 98%,rgba(255,255,255,.6),transparent 70%),linear-gradient(180deg,#a8461f,#d4692f 50%,#8f3a18)",
+  },
+  experience: {
+    label: "Neptune", hex: "#4f6ef7", glow: "rgba(80,110,255,.42)", mini: "radial-gradient(circle at 30% 30%,#93a8ff,#3556d8 55%,#16256b)",
+    size: 360, side: "l", top: "42%", k: -0.55, spin: 75, dim: 0.85,
+    tex: "radial-gradient(ellipse 22% 5% at 35% 38%,rgba(255,255,255,.5),transparent 70%),radial-gradient(ellipse 16% 4% at 75% 62%,rgba(255,255,255,.32),transparent 70%),radial-gradient(ellipse 12% 9% at 55% 50%,rgba(15,25,90,.6),transparent 70%),linear-gradient(180deg,#1e3a8a,#3556d8 45%,#2a3fa6 70%,#172a73)",
+  },
+  certificates: {
+    label: "Venus", hex: "#eab308", glow: "rgba(240,200,90,.4)", mini: "radial-gradient(circle at 30% 30%,#fde68a,#d3a954 55%,#7a5a1e)",
+    size: 320, side: "r", top: "-70px", k: -0.12, spin: 100,
+    tex: "radial-gradient(ellipse 30% 9% at 40% 30%,rgba(255,255,255,.35),transparent 70%),radial-gradient(ellipse 26% 8% at 78% 66%,rgba(255,240,200,.3),transparent 70%),linear-gradient(180deg,#b88a3c,#e8c872 25%,#d3a954 45%,#f2dc95 65%,#bd9040)",
+  },
+  contact: {
+    label: "Uranus", hex: "#22d3ee", glow: "rgba(70,210,230,.4)", mini: "radial-gradient(circle at 30% 30%,#bdf3fb,#5fb8c9 55%,#1f6f80)",
+    size: 360, side: "l", top: "-80px", k: -0.38, spin: 110, dim: 0.9,
+    ring: { rs: 1.9, tilt: 74, sq: 0.2, c1: "rgba(160,235,245,.55)", c2: "rgba(120,205,220,.35)" },
+    tex: "radial-gradient(ellipse 30% 6% at 40% 40%,rgba(255,255,255,.2),transparent 70%),linear-gradient(180deg,#5fb8c9,#93e3ec 50%,#5aaebf)",
+  },
+};
+
+function Planet({ id }: { id: string }) {
+  const d = planets[id];
+  const ref = useRef<HTMLDivElement>(null);
+  const inner = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current, inn = inner.current;
+    if (!el || !inn) return;
+    const sec = el.parentElement as HTMLElement;
+    const reduce = prefersReduced();
+    const dir = d.side === "r" ? 1 : -1;
+    return subscribeScroll(() => {
+      const vh = window.innerHeight;
+      const r = sec.getBoundingClientRect();
+      if (r.bottom < -vh * 0.8 || r.top > vh * 1.8) return;
+      const p = (r.top + r.height * 0.3 - vh / 2) / vh;      // 0 when the top of the section sits mid-screen
+      const near = Math.max(0, 1 - Math.abs(p) / 1.1);
+      const e = near * near * (3 - 2 * near);
+      const s = el.offsetWidth;
+      if (reduce) { inn.style.transform = "none"; inn.style.opacity = "1"; return; }
+      inn.style.transform = `translate3d(${dir * (1 - e) * s * 0.75}px, ${p * -110}px, 0) scale(${0.55 + 0.5 * e}) rotate(${p * 14}deg)`;
+      inn.style.opacity = String(Math.min(1, e * 1.7));
+    });
+  }, [d.side]);
+  const ringStyle = d.ring ? ({ "--rs": d.ring.rs, "--tilt": `${d.ring.tilt}deg`, "--sq": d.ring.sq, "--r1": d.ring.c1, "--r2": d.ring.c2 } as CSSProperties) : undefined;
+  return (
+    <div ref={ref} className="planet" aria-hidden
+      style={{ "--s0": `${d.size}px`, "--k": d.k, "--glow": d.glow, "--spin": `${d.spin}s`, "--dim": d.dim ?? 1, top: d.top, [d.side === "r" ? "right" : "left"]: "calc(var(--s) * var(--k))" } as CSSProperties}>
+      <div ref={inner} className="pl-inner">
+        {d.ring && <div className="pl-ring back" style={ringStyle} />}
+        <div className="pl-sphere">
+          <div className="pl-tex" style={{ backgroundImage: d.tex }} />
+          <div className="pl-shade" />
+        </div>
+        {d.ring && <div className="pl-ring front" style={ringStyle} />}
+      </div>
+    </div>
+  );
+}
+
+function Ghost({ text }: { text: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (prefersReduced()) return;
+    return subscribeScroll(() => {
+      const el = ref.current, par = el?.parentElement;
+      if (!el || !par) return;
+      const r = par.getBoundingClientRect();
+      const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
+      el.style.transform = `translate3d(${p * -16}vw, 0, 0)`;
+    });
+  }, []);
+  return <span ref={ref} className="sh-ghost" aria-hidden>{text.toUpperCase()}</span>;
+}
+
 /* ═══════════════════════════ Small components ═══════════════════════════ */
 
 function Tag({ tag }: { tag: string }) {
@@ -499,10 +641,17 @@ function Tag({ tag }: { tag: string }) {
   return <span className="tag" style={hex ? ({ "--c": hex } as CSSProperties) : undefined}>{tag}</span>;
 }
 
-function SectionHead({ index, label, title }: { index: string; label: string; title: string }) {
+function SectionHead({ index, label, title, planet }: { index: string; label: string; title: string; planet: string }) {
+  const pl = planets[planet];
   return (
     <Reveal className="sh">
-      <div className="sh-top"><span className="sh-idx">{index}</span><span className="sh-line" /><span className="sh-label">{label}</span></div>
+      <Ghost text={title.split(" ")[0]} />
+      <div className="sh-top">
+        <span className="sh-idx">{index}</span>
+        <span className="mp" style={{ "--g": pl.mini, "--glow": pl.glow } as CSSProperties}><i /></span>
+        <span className="sh-label">{label}</span>
+        <span className="sh-pl">/ {pl.label}</span>
+      </div>
       <h2><Scramble text={title} /></h2>
     </Reveal>
   );
@@ -546,7 +695,7 @@ function Timeline({ children }: { children: ReactNode }) {
 }
 
 function TlItem({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
-  return <Reveal delay={delay} className="tl-item"><span className="tl-node" />{children}</Reveal>;
+  return <Reveal delay={delay} from="right" className="tl-item"><span className="tl-node" />{children}</Reveal>;
 }
 
 function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
@@ -864,13 +1013,13 @@ const css = `
 :where(.pf) :where(img) { display:block; max-width:100%; }
 .pf-main { background:var(--bg); min-height:100vh; overflow-x:hidden; position:relative; }
 .pf-main ::selection { background:rgba(34,211,238,.3); }
-.wrap { max-width:1120px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
+.wrap { max-width:1120px; margin:0 auto; padding:0 24px; position:relative; z-index:2; perspective:1400px; }
 .sec { padding:110px 0; position:relative; z-index:2; }
 
 /* background layers */
 .particles { position:fixed; inset:0; z-index:0; pointer-events:none; }
 .aurora { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.aurora i { position:absolute; border-radius:50%; filter:blur(90px); opacity:.5; }
+.aurora i { position:absolute; border-radius:50%; filter:blur(90px); opacity:.36; }
 .aurora i:nth-child(1) { width:520px; height:520px; left:-120px; top:-80px; background:#0e7490; animation:drift1 22s ease-in-out infinite alternate; }
 .aurora i:nth-child(2) { width:480px; height:480px; right:-120px; top:25vh; background:#5b21b6; animation:drift2 26s ease-in-out infinite alternate; }
 .aurora i:nth-child(3) { width:420px; height:420px; left:30vw; bottom:-160px; background:#1e3a8a; opacity:.42; animation:drift3 30s ease-in-out infinite alternate; }
@@ -881,8 +1030,12 @@ const css = `
 .progress { position:fixed; top:0; left:0; height:3px; z-index:90; background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3)); box-shadow:0 0 14px rgba(34,211,238,.7); }
 
 /* reveal */
-.rv { opacity:0; transform:translateY(34px); filter:blur(6px); transition:opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1), filter .85s cubic-bezier(.2,.7,.2,1); }
-.rv.in { opacity:1; transform:none; filter:none; }
+.rv { opacity:0; will-change:transform,opacity; transition:opacity .4s ease, transform .95s cubic-bezier(.17,1.2,.35,1); }
+.rv-up { transform:translate3d(0,90px,-170px) rotateX(16deg) scale(.94); transform-origin:50% 100%; }
+.rv-left { transform:translate3d(-130px,36px,-130px) rotateY(20deg) scale(.94); transform-origin:0 50%; }
+.rv-right { transform:translate3d(130px,36px,-130px) rotateY(-20deg) scale(.94); transform-origin:100% 50%; }
+.rv-zoom { transform:translate3d(0,50px,-260px) scale(.7); }
+.rv.in { opacity:1; transform:none; }
 
 /* nav */
 .nav { position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:80; display:flex; gap:2px; padding:6px; border-radius:999px;
@@ -922,6 +1075,34 @@ const css = `
 .ready .nav { animation:navIn 1s cubic-bezier(.2,.8,.2,1) .6s both; }
 .ready .mbar { animation:fade .9s ease .6s both; }
 
+
+
+/* planets */
+.planet { --s:var(--s0); position:absolute; z-index:1; width:var(--s); height:var(--s); pointer-events:none; opacity:var(--dim,1); }
+.pl-inner { position:absolute; inset:0; will-change:transform,opacity; opacity:0; }
+.pl-sphere { position:absolute; inset:0; border-radius:50%; overflow:hidden; background:#10131c; box-shadow:0 0 130px 12px var(--glow),0 0 0 1px rgba(255,255,255,.05); }
+.pl-tex { position:absolute; top:0; left:0; width:200%; height:100%; background-size:50% 100%; background-repeat:repeat-x; animation:texSpin var(--spin) linear infinite; }
+.pl-shade { position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle at 30% 26%,rgba(255,255,255,.26),transparent 40%),radial-gradient(circle at 74% 72%,transparent 34%,rgba(0,0,0,.6) 76%,rgba(0,0,0,.9)); box-shadow:inset -34px -26px 80px rgba(0,0,0,.78),inset 6px 5px 26px rgba(255,255,255,.1); }
+.pl-ring { position:absolute; z-index:0; left:calc((1 - var(--rs)) * 50%); top:calc((1 - var(--rs)) * 50%); width:calc(var(--rs) * 100%); height:calc(var(--rs) * 100%); border-radius:50%; transform:rotate(var(--tilt)) scaleY(var(--sq));
+  background:radial-gradient(closest-side,transparent 55%,var(--r1) 57% 64%,transparent 65% 68%,var(--r2) 69% 80%,transparent 81%); }
+.pl-ring.back { clip-path:inset(0 0 50% 0); }
+.pl-ring.front { z-index:3; clip-path:inset(50% 0 0 0); }
+.pl-sphere { z-index:1; }
+
+/* hero horizon + warp + rail */
+.hero { overflow:hidden; }
+.hero-horizon { position:absolute; left:50%; bottom:-2330px; width:2600px; height:2600px; margin-left:-1300px; border-radius:50%; pointer-events:none; z-index:1;
+  background:radial-gradient(closest-side at 50% 0%,#0a1428,#05060b 22%); box-shadow:0 -2px 0 rgba(103,232,249,.5),0 -24px 70px rgba(34,211,238,.28),0 -70px 180px rgba(99,102,241,.22); }
+.hero .wrap { transform:translate3d(0,calc(var(--hp,0) * -80px),0) scale(calc(1 - var(--hp,0) * .1)); opacity:calc(1 - var(--hp,0) * 1.3); transform-origin:50% 60%; will-change:transform,opacity; }
+.warp { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0; background:radial-gradient(ellipse at 50% 50%,transparent 42%,rgba(56,189,248,.16) 100%); }
+.rail { position:fixed; right:20px; top:50%; transform:translateY(-50%); z-index:75; display:flex; flex-direction:column; gap:20px; padding:16px 9px; }
+.rail-track { position:absolute; left:50%; top:22px; bottom:22px; width:1px; margin-left:-.5px; background:linear-gradient(transparent,rgba(255,255,255,.2),transparent); }
+.rail-ship { position:absolute; left:50%; top:0; width:6px; height:6px; margin:-3px 0 0 -2.5px; border-radius:50%; background:#fff; box-shadow:0 0 12px 3px rgba(103,232,249,.8); }
+.rail button { position:relative; width:13px; height:13px; border-radius:50%; background:radial-gradient(circle at 30% 30%,color-mix(in srgb,var(--c) 55%,#fff),var(--c) 60%,#000 150%); opacity:.5; transition:transform .35s cubic-bezier(.3,1.6,.5,1),opacity .3s,box-shadow .3s; }
+.rail button.on { opacity:1; transform:scale(1.55); box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent),0 0 20px var(--c); }
+.rail button:hover { opacity:1; transform:scale(1.4); }
+.rail button span { position:absolute; right:26px; top:50%; transform:translate(10px,-50%) scale(.9); opacity:0; white-space:nowrap; font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:5px 11px; border-radius:999px; background:rgba(10,12,20,.9); border:1px solid var(--line); pointer-events:none; transition:opacity .2s,transform .25s; }
+.rail button:hover span { opacity:1; transform:translate(0,-50%) scale(1); }
 
 /* gate */
 .gate { position:fixed; inset:0; z-index:500; background:var(--bg); overflow:hidden; touch-action:none; user-select:none; -webkit-user-select:none; display:flex; flex-direction:column; justify-content:space-between; padding:26px clamp(20px,5vw,56px); }
@@ -993,10 +1174,14 @@ const css = `
 .marq span:hover { color:var(--c1); border-color:rgba(34,211,238,.5); }
 
 /* section heads */
-.sh { margin-bottom:56px; }
+.sh { margin-bottom:56px; position:relative; }
 .sh-top { display:flex; align-items:center; gap:12px; }
 .sh-idx { font-family:var(--mono); font-size:13px; color:var(--c1); }
-.sh-line { width:38px; height:1px; background:linear-gradient(90deg,var(--c1),transparent); }
+.sh-pl { font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--c1); opacity:.8; }
+.sh-ghost { position:absolute; left:-6px; top:-.62em; z-index:-1; font-size:clamp(4.5rem,15vw,12rem); font-weight:700; letter-spacing:-.04em; line-height:1; white-space:nowrap; color:transparent; -webkit-text-stroke:1px rgba(232,236,245,.1); pointer-events:none; user-select:none; will-change:transform; }
+.mp { position:relative; width:20px; height:20px; border-radius:50%; flex:none; margin:0 6px; background:var(--g); box-shadow:inset -5px -4px 7px rgba(0,0,0,.65),0 0 14px var(--glow); }
+.mp i { position:absolute; inset:-7px; border:1px dashed rgba(255,255,255,.22); border-radius:50%; animation:spin 9s linear infinite; }
+.mp i::after { content:""; position:absolute; top:-2.5px; left:50%; width:5px; height:5px; margin-left:-2.5px; border-radius:50%; background:#fff; box-shadow:0 0 8px #fff; }
 .sh-label { font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--mut); }
 .sh h2 { font-size:clamp(2.3rem,5.4vw,4rem); letter-spacing:-.035em; font-weight:700; margin-top:12px; }
 .sh h2::after { content:""; display:block; width:70px; height:4px; border-radius:4px; margin-top:16px; background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3)); }
@@ -1180,6 +1365,7 @@ const css = `
 .top-btn:hover { border-color:var(--c1); }
 
 /* keyframes */
+@keyframes texSpin { to { transform:translateX(-50%); } }
 @keyframes letterIn { to { opacity:1; transform:none; } }
 @keyframes heroIn { from { opacity:0; transform:translateY(34px); filter:blur(8px); } to { opacity:1; transform:none; filter:none; } }
 @keyframes popIn { from { opacity:0; transform:scale(.55) rotate(-24deg); filter:blur(10px); } to { opacity:1; transform:none; filter:none; } }
@@ -1201,6 +1387,7 @@ const css = `
 @keyframes drift3 { to { transform:translate(120px,-90px) scale(1.15); } }
 
 /* responsive */
+@media (max-width:1100px) { .rail { display:none; } }
 @media (max-width:1020px) {
   .nav { display:none; } .mbar { display:flex; }
   .hero-grid { grid-template-columns:1fr; } .hero-vis { order:-1; } .hero { padding-top:96px; }
@@ -1212,6 +1399,9 @@ const css = `
   .skill-row { grid-template-columns:1fr; }
 }
 @media (max-width:680px) {
+  .planet { --s:min(var(--s0),62vw); opacity:calc(var(--dim,1) * .6); }
+  .sh-ghost { font-size:4.2rem; }
+  .rv-left, .rv-right { transform:translate3d(0,60px,-120px) scale(.94); }
   .sec { padding:76px 0; }
   .stats { grid-template-columns:1fr 1fr; margin-top:36px; }
   .skill-grid, .interests, .pj-grid, .cert-grid { grid-template-columns:1fr; }
@@ -1227,10 +1417,12 @@ const css = `
 }
 @media (hover:none) { .cursor-glow { display:none; } }
 @media (prefers-reduced-motion:reduce) {
-  .rv { opacity:1; transform:none; filter:none; transition:none; }
   .name .ch { opacity:1; transform:none; animation:none !important; }
   .hin, .hin-pop { opacity:1 !important; animation:none !important; }
   .gate, .gate-ring { display:none; }
+  .pl-tex, .mp i, .sh-ghost { animation:none !important; }
+  .rv { transform:none !important; opacity:1 !important; transition:none !important; }
+  .hero .wrap { transform:none; opacity:1; }
   .aurora i, .ring, .chip-in, .marq-track, .orbit-core::before, .cta::before, .btn.primary::after, .dot, .scroll-cue::after { animation:none !important; }
   .tl-line { transform:none; transition:none; }
 }
@@ -1242,7 +1434,9 @@ const nameWords = ["Chava", "Fahmy", "Abid"];
 const nameTotal = nameWords.join("").length;
 
 export default function Home() {
-  const [progress, setProgress] = useState(0);
+  const progRef = useRef<HTMLDivElement>(null);
+  const shipRef = useRef<HTMLSpanElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const [showTop, setShowTop] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState("");
@@ -1259,16 +1453,15 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0);
-      setShowTop(window.scrollY > 700);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useEffect(() => subscribeScroll(() => {
+    const vh = window.innerHeight;
+    const max = document.documentElement.scrollHeight - vh;
+    const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+    if (progRef.current) progRef.current.style.width = `${p * 100}%`;
+    if (shipRef.current) shipRef.current.style.top = `${p * 100}%`;
+    if (heroRef.current) heroRef.current.style.setProperty("--hp", String(Math.min(1, window.scrollY / (vh * 0.85))));
+    setShowTop(window.scrollY > 700);
+  }), []);
 
   useEffect(() => {
     const el = glowRef.current;
@@ -1313,9 +1506,9 @@ export default function Home() {
       <style dangerouslySetInnerHTML={{ __html: css }} />
       {introOn && <Gate onReveal={reveal} onDone={introDone} />}
 
-      <div className="progress" style={{ width: `${progress}%` }} />
+      <div className="progress" ref={progRef} />
       <div className="aurora" aria-hidden><i /><i /><i /></div>
-      <ParticleField />
+      <Starfield />
       <div className="grain" aria-hidden />
       <div className="cursor-glow" ref={glowRef} aria-hidden />
 
@@ -1337,8 +1530,19 @@ export default function Home() {
         ))}
       </div>
 
+      {/* ORBIT RAIL: the section planets as a mini solar system */}
+      <nav className="rail" aria-label="Sections">
+        <div className="rail-track"><span className="rail-ship" ref={shipRef} /></div>
+        {navItems.map(({ id, label }) => (
+          <button key={id} className={active === id ? "on" : ""} style={{ "--c": planets[id].hex } as CSSProperties} onClick={() => scrollTo(id)} aria-label={`${label} — ${planets[id].label}`}>
+            <span>{label} · {planets[id].label}</span>
+          </button>
+        ))}
+      </nav>
+
       {/* HERO */}
-      <header className="hero">
+      <header className="hero" ref={heroRef}>
+        <div className="hero-horizon" aria-hidden />
         <div className="wrap" style={{ width: "100%" }}>
           <div className="hero-grid">
             <div>
@@ -1400,15 +1604,16 @@ export default function Home() {
 
       {/* ABOUT */}
       <section id="about" className="sec">
+        <Planet id="about" />
         <div className="wrap">
-          <SectionHead index="01" label="Who I am" title="About Me" />
+          <SectionHead index="01" label="Who I am" title="About Me" planet="about" />
           <div className="about">
-            <Reveal className="bio">
+            <Reveal className="bio" from="left">
               <p>I am Chava Fahmy Abid, currently pursuing a <b>Bachelor of Information Technology (Hons)</b> at Universiti Teknologi PETRONAS. I have honed my skills in coding, software maintenance and problem solving through various projects, and I bring an innovative mindset and solid technical foundations to everything I build.</p>
               <p>I enjoy building complete systems, from the database design and backend logic to the interface people actually use. I am also planning to pursue <span className="hl">further studies</span> after my degree.</p>
               <p>During my time at Universiti Teknologi PETRONAS, I have gained practical experience through projects that taught me both technical and teamwork skills. I am adaptable, curious, and eager to learn new technologies while continuously improving existing skills.</p>
             </Reveal>
-            <Reveal delay={0.15}>
+            <Reveal delay={0.12} from="right">
               <Tilt max={6} className="idcard">
                 <div className="id-top">
                   <div className="avatar">CFA</div>
@@ -1432,7 +1637,7 @@ export default function Home() {
           </div>
 
           <div className="interests">
-            <Reveal delay={0.1}>
+            <Reveal delay={0.05} from="left">
               <Tilt className="interest">
                 <h3>Sports</h3>
                 <div className="pills">
@@ -1440,7 +1645,7 @@ export default function Home() {
                 </div>
               </Tilt>
             </Reveal>
-            <Reveal delay={0.2}>
+            <Reveal delay={0.1} from="right">
               <Tilt className="interest">
                 <h3>Hobbies</h3>
                 <div className="pills">
@@ -1454,8 +1659,9 @@ export default function Home() {
 
       {/* EDUCATION */}
       <section id="education" className="sec">
+        <Planet id="education" />
         <div className="wrap">
-          <SectionHead index="02" label="Background" title="Education" />
+          <SectionHead index="02" label="Background" title="Education" planet="education" />
           <Timeline>
             <TlItem>
               <Tilt className="tl-card">
@@ -1487,11 +1693,12 @@ export default function Home() {
 
       {/* SKILLS */}
       <section id="skills" className="sec">
+        <Planet id="skills" />
         <div className="wrap">
-          <SectionHead index="03" label="What I bring" title="Skills" />
+          <SectionHead index="03" label="What I bring" title="Skills" planet="skills" />
           <div className="skill-grid">
             {skillGroups.map((g, i) => (
-              <Reveal key={g.title} delay={(i % 2) * 0.1}>
+              <Reveal key={g.title} delay={(i % 2) * 0.08} from={i % 2 ? "right" : "left"}>
                 <Tilt className="skill">
                   <div className="skill-head" style={{ "--c": g.hex } as CSSProperties}>
                     <span className="skill-dot" /><h3>{g.title}</h3>
@@ -1503,14 +1710,14 @@ export default function Home() {
           </div>
 
           <div className="skill-row">
-            <Reveal><LanguagesCard /></Reveal>
+            <Reveal from="left"><LanguagesCard /></Reveal>
             <Reveal delay={0.1}>
               <Tilt className="skill">
                 <div className="skill-head" style={{ "--c": "#8b5cf6" } as CSSProperties}><span className="skill-dot" /><h3>Everyday Tools</h3></div>
                 <div className="chips">{["MS Word", "MS Excel", "PowerPoint", "Google Docs", "Google Sheets", "Google Drive", "Zoom", "MS Teams", "Canva", "Figma"].map(t => <Tag key={t} tag={t} />)}</div>
               </Tilt>
             </Reveal>
-            <Reveal delay={0.2}>
+            <Reveal delay={0.16} from="right">
               <Tilt className="skill">
                 <div className="skill-head" style={{ "--c": "#34d399" } as CSSProperties}><span className="skill-dot" /><h3>Interpersonal</h3></div>
                 <div className="soft">
@@ -1524,12 +1731,13 @@ export default function Home() {
 
       {/* PROJECTS */}
       <section id="projects" className="sec">
+        <Planet id="projects" />
         <div className="wrap">
-          <SectionHead index="04" label="What I've built" title="Projects" />
-          <Reveal><ProjectCard project={projects[0]} index={0} /></Reveal>
+          <SectionHead index="04" label="What I've built" title="Projects" planet="projects" />
+          <Reveal from="zoom"><ProjectCard project={projects[0]} index={0} /></Reveal>
           <div className="pj-grid">
             {projects.slice(1).map((p, i) => (
-              <Reveal key={p.title} delay={(i % 2) * 0.1}><ProjectCard project={p} index={i + 1} /></Reveal>
+              <Reveal key={p.title} delay={(i % 2) * 0.08} from={i % 2 ? "right" : "left"}><ProjectCard project={p} index={i + 1} /></Reveal>
             ))}
           </div>
         </div>
@@ -1537,11 +1745,12 @@ export default function Home() {
 
       {/* ACHIEVEMENTS */}
       <section id="achievements" className="sec">
+        <Planet id="achievements" />
         <div className="wrap">
-          <SectionHead index="05" label="Recognition" title="Achievements" />
+          <SectionHead index="05" label="Recognition" title="Achievements" planet="achievements" />
           <SubHead>Universiti Teknologi PETRONAS</SubHead>
           <div className="ach-top">
-            <Reveal>
+            <Reveal from="left">
               <Tilt className="ach gold" max={3}>
                 <span className="ach-tag" style={{ color: "var(--amber)" }}>Hackathon</span>
                 <h3>4th Place — Invent for the Planet 2025</h3>
@@ -1550,7 +1759,7 @@ export default function Home() {
                 <PhotoButton id="iftp" title="4th Place — Invent for the Planet 2025" subtitle="UTP & Texas A&M University" />
               </Tilt>
             </Reveal>
-            <Reveal delay={0.12}>
+            <Reveal delay={0.1} from="right">
               <Tilt className="ach blue">
                 <span className="ach-tag">Academic</span>
                 <h3>Dean&apos;s List</h3>
@@ -1579,8 +1788,9 @@ export default function Home() {
 
       {/* EXPERIENCE */}
       <section id="experience" className="sec">
+        <Planet id="experience" />
         <div className="wrap">
-          <SectionHead index="06" label="Involvement" title="Experience" />
+          <SectionHead index="06" label="Involvement" title="Experience" planet="experience" />
           <SubHead>Universiti Teknologi PETRONAS</SubHead>
           <Timeline>
             <TlItem>
@@ -1625,11 +1835,12 @@ export default function Home() {
 
       {/* CERTIFICATES */}
       <section id="certificates" className="sec">
+        <Planet id="certificates" />
         <div className="wrap">
-          <SectionHead index="07" label="Credentials" title="Certificates" />
+          <SectionHead index="07" label="Credentials" title="Certificates" planet="certificates" />
           <div className="cert-grid">
             {certifications.map((c, i) => (
-              <Reveal key={c.name} delay={(i % 3) * 0.1}><CertCard cert={c} index={i} /></Reveal>
+              <Reveal key={c.name} delay={(i % 3) * 0.09} from="zoom"><CertCard cert={c} index={i} /></Reveal>
             ))}
           </div>
         </div>
@@ -1637,8 +1848,9 @@ export default function Home() {
 
       {/* CONTACT */}
       <section id="contact" className="sec">
+        <Planet id="contact" />
         <div className="wrap">
-          <Reveal>
+          <Reveal from="zoom">
             <div className="cta">
               <p style={{ margin: "0 auto 14px", fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".28em", textTransform: "uppercase", color: "var(--c1)" }}>08 — Get in touch</p>
               <h2>Let&apos;s build something <span>great together.</span></h2>
@@ -1654,7 +1866,7 @@ export default function Home() {
 
       <footer className="footer">
         <span>© {new Date().getFullYear()} Chava Fahmy Abid</span>
-       
+        <span>Designed &amp; built with Next.js</span>
       </footer>
 
       <button className={`top-btn ${showTop ? "show" : ""}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top">↑</button>
